@@ -1,8 +1,9 @@
 import base64
+import io
 import json
 from datetime import date
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, File, UploadFile
 from groq import Groq
 from pydantic import BaseModel
 from sqlmodel import Session, select
@@ -114,6 +115,40 @@ class VoiceChatResponse(BaseModel):
     reply_text: str
     audio_b64:  str
     draft:      Draft | None = None
+
+
+class TranscribeResponse(BaseModel):
+    text: str
+
+
+class TtsRequest(BaseModel):
+    text: str
+
+
+class TtsResponse(BaseModel):
+    audio_b64: str
+
+
+@router.post("/transcribe", response_model=TranscribeResponse)
+async def transcribe_audio(
+    audio: UploadFile = File(...),
+    current_user: User = Depends(get_current_user),
+):
+    audio_bytes = await audio.read()
+    result = _groq.audio.transcriptions.create(
+        file=(audio.filename or "audio.webm", io.BytesIO(audio_bytes), audio.content_type or "audio/webm"),
+        model="whisper-large-v3-turbo",
+    )
+    return TranscribeResponse(text=result.text)
+
+
+@router.post("/tts", response_model=TtsResponse)
+def tts(
+    body: TtsRequest,
+    current_user: User = Depends(get_current_user),
+):
+    audio_bytes = speak(body.text)
+    return TtsResponse(audio_b64=base64.b64encode(audio_bytes).decode())
 
 
 @router.delete("/history", status_code=204)

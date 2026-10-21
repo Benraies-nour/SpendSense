@@ -23,6 +23,22 @@ class ExpenseCreate(SQLModel):
             return v.replace(tzinfo=timezone.utc)
         return v
 
+class ExpenseUpdate(SQLModel):
+    category_id: int | None = None
+    amount: Decimal | None = None
+    description: str | None = None
+    source: ExpenseSource | None = None
+    is_recurring: bool | None = None
+    due_day: int | None = None
+    created_at: Optional[datetime] = None
+
+    @field_validator('created_at', mode='after')
+    @classmethod
+    def created_at_utc(cls, v: Optional[datetime]) -> Optional[datetime]:
+        if v is not None and v.tzinfo is None:
+            return v.replace(tzinfo=timezone.utc)
+        return v
+
 class ExpenseRead(SQLModel):
     id: int
     user_id: int

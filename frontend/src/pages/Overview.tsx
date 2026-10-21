@@ -3,8 +3,9 @@ import type { Category, CategoryId, Expense, Income } from '../types'
 import { OverviewFilters } from '../components/OverviewFilters'
 import { StatCard } from '../components/StatCard'
 import { fetchCategories, fetchExpenses, fetchIncomes } from '../lib/api'
-import { getOverview, getExpensesByCategory, getBudgetVsActual, getExpensesTrend } from '../lib/overview'
+import { getOverview, getExpensesByCategory, getBudgetVsActual, getExpensesTrend, getIncomesBySource } from '../lib/overview'
 import { ExpensesByCategory } from '../components/ExpensesByCategory'
+import { IncomesBySource } from '../components/IncomesBySource'
 import { BudgetVsActual } from '../components/BudgetVsActual'
 import { ExpensesTrend } from '../components/ExpensesTrend'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -72,6 +73,7 @@ function handleEndDateChange(value: string) {
 
 const data = getOverview(expenses, incomes, categories, startDate, endDate, selectedCategories)
 const categorySlices = getExpensesByCategory(expenses, categories, startDate, endDate, selectedCategories)
+const incomeSlices = getIncomesBySource(incomes, startDate, endDate)
 const budgetBars = getBudgetVsActual(expenses, incomes, categories, startDate, endDate, selectedCategories)
 const trendPoints = getExpensesTrend(expenses, incomes, startDate, endDate, selectedCategories)
 
@@ -91,6 +93,15 @@ const trendPoints = getExpensesTrend(expenses, incomes, startDate, endDate, sele
 
   return (
     <div className="flex flex-col gap-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-xl font-bold tracking-tight">Overview</h1>
+          <p className="text-sm text-muted-foreground mt-1">Your financial summary</p>
+        </div>
+        <p className="text-base text-foreground italic hidden md:block">
+          Today : {new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+        </p>
+      </div>
       <OverviewFilters
         month={month}
         onMonthChange={handleMonthChange}
@@ -115,10 +126,14 @@ const trendPoints = getExpensesTrend(expenses, incomes, startDate, endDate, sele
           <CardContent><ExpensesByCategory data={categorySlices} /></CardContent>
         </Card>
         <Card>
-          <CardHeader><CardTitle>Budget vs Actual</CardTitle></CardHeader>
-          <CardContent><BudgetVsActual data={budgetBars} /></CardContent>
+          <CardHeader><CardTitle>Income by Source</CardTitle></CardHeader>
+          <CardContent><IncomesBySource data={incomeSlices} /></CardContent>
         </Card>
       </div>
+      <Card>
+        <CardHeader><CardTitle>Budget vs Actual</CardTitle></CardHeader>
+        <CardContent><BudgetVsActual data={budgetBars} /></CardContent>
+      </Card>
       <Card>
         <CardHeader><CardTitle>Income vs Expenses</CardTitle></CardHeader>
         <CardContent><ExpensesTrend data={trendPoints} /></CardContent>

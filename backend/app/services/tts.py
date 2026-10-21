@@ -7,15 +7,16 @@ VOICE_FR = "fr-FR-DeniseNeural"
 VOICE_AR = "ar-TN-ReemNeural"
 VOICE_EN = "en-US-JennyNeural"
 
-_FRENCH_PATTERN = re.compile(r"[àâäéèêëîïôùûüçœæ]", re.IGNORECASE)
-_FRENCH_WORDS   = re.compile(r"\b(je|tu|il|elle|nous|vous|ils|elles|le|la|les|un|une|des|est|sont|avec|pour|dans|sur|qui|que|pas|plus|très|bien|mais|aussi|tout|cette|votre|mon|ton|son)\b", re.IGNORECASE)
+_FRENCH_ACCENTS = re.compile(r"[àâäéèêëîïôùûüçœæ]", re.IGNORECASE)
+# Only words that do not exist in English
+_FRENCH_WORDS   = re.compile(r"\b(je|tu|nous|vous|ils|elles|avec|pour|dans|très|mais|aussi|cette|votre|bonjour|merci|oui|non|dépense|revenu|catégorie|ajouté|dépensé|acheté|payé|reçu)\b", re.IGNORECASE)
 
 
 def _detect_voice(text: str) -> str:
     """Pick voice by language: Arabic → AR, French → FR, otherwise English."""
     if any("؀" <= ch <= "ۿ" for ch in text):
         return VOICE_AR
-    if _FRENCH_PATTERN.search(text) or _FRENCH_WORDS.search(text):
+    if _FRENCH_ACCENTS.search(text) or _FRENCH_WORDS.search(text):
         return VOICE_FR
     return VOICE_EN
 

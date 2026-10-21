@@ -101,13 +101,6 @@ export function CategoriesTab() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
 
-      <div>
-        <h2 style={{ fontSize: 20, fontWeight: 600, margin: 0 }}>Categories</h2>
-        <p style={{ fontSize: 13, color: 'var(--color-text-muted)', marginTop: 4 }}>
-          Set a fixed monthly budget for each category in TND.
-        </p>
-      </div>
-
       {/* Table */}
       <div style={{ border: '1px solid var(--color-border)', borderRadius: 8, overflow: 'hidden' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>

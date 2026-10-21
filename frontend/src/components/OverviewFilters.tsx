@@ -38,32 +38,47 @@ export function OverviewFilters({
     ? 'Toutes les catégories'
     : `${selectedCategories.length} sélectionnée${selectedCategories.length > 1 ? 's' : ''}`
 
-  const today = new Date().toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-4">
+    <div className="flex flex-col gap-4">
 
-      <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'flex-end' }}>
-        <label style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', fontSize: '0.875rem' }}>
-          Mois
-          <input type="month" value={month} onChange={(e) => onMonthChange(e.target.value)} />
-        </label>
-        <label style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', fontSize: '0.875rem' }}>
-          Du
-          <input type="date" value={startDate} onChange={(e) => onStartDateChange(e.target.value)} />
-        </label>
-        <label style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', fontSize: '0.875rem' }}>
-          Au
-          <input type="date" value={endDate} onChange={(e) => onEndDateChange(e.target.value)} />
-        </label>
-      </div>
 
-      <div className="text-center hidden md:block">
-        <p className="text-xs text-muted-foreground uppercase tracking-wide">Today</p>
-        <p className="text-sm font-medium">{today}</p>
-      </div>
+      {/* Filters row */}
+      <div className="flex flex-wrap gap-6 items-start justify-between">
 
-      <div className="flex flex-col gap-1 text-sm md:items-end">
+        {/* Date filters */}
+        <div className="flex flex-wrap gap-3 items-end">
+          <div className="flex flex-col gap-1 text-sm">
+            Mois
+            <input
+              type="month"
+              value={month}
+              onChange={(e) => onMonthChange(e.target.value)}
+              className="rounded-lg border bg-transparent px-3 py-2 text-sm text-foreground outline-none focus:ring-1 focus:ring-primary"
+            />
+          </div>
+          <div className="flex flex-col gap-1 text-sm">
+            Du
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => onStartDateChange(e.target.value)}
+              className="rounded-lg border bg-transparent px-3 py-2 text-sm text-foreground outline-none focus:ring-1 focus:ring-primary"
+            />
+          </div>
+          <div className="flex flex-col gap-1 text-sm">
+            Au
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => onEndDateChange(e.target.value)}
+              className="rounded-lg border bg-transparent px-3 py-2 text-sm text-foreground outline-none focus:ring-1 focus:ring-primary"
+            />
+          </div>
+        </div>
+
+        {/* Category filter */}
+        <div className="flex flex-col gap-1 text-sm items-end">
         Catégories
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger
@@ -104,6 +119,8 @@ export function OverviewFilters({
             })}
           </div>
         )}
+        </div>
+
       </div>
 
     </div>

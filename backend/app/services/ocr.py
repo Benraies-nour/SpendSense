@@ -19,7 +19,7 @@ from app.core.config import settings
 
 class OcrItem(BaseModel):
     name: str
-    quantity: Decimal | None = None
+    quantity: int | None = None
     total_price: Decimal
 
 
@@ -113,11 +113,11 @@ def _extract_items(items_field: dict | None) -> list[OcrItem]:
             continue  # skip items without a price
 
         qty_text = _extract_text(obj.get("Quantity"))
-        quantity: Decimal | None = None
+        quantity: int | None = None
         if qty_text:
             try:
-                quantity = Decimal(qty_text).quantize(Decimal("0.001"))
-            except InvalidOperation:
+                quantity = int(Decimal(qty_text))
+            except (InvalidOperation, ValueError):
                 pass
 
         result.append(OcrItem(name=name, quantity=quantity, total_price=total_price))

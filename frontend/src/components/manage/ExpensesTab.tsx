@@ -13,6 +13,7 @@ export function ExpensesTab() {
   const [status, setStatus]       = useState<'loading' | 'error' | 'ok'>('loading')
   const [showManual, setShowManual] = useState(false)
   const [showScan, setShowScan]   = useState(false)
+  const [editingExpense, setEditingExpense] = useState<Expense | null>(null)
   const [scanAlert, setScanAlert] = useState('')
   const [receiptModal, setReceiptModal] = useState<number | null>(null)
 
@@ -67,6 +68,27 @@ export function ExpensesTab() {
           categories={categories}
           onCreated={expense => { setExpenses(prev => [expense, ...prev]); setShowManual(false) }}
           onClose={() => setShowManual(false)}
+        />
+      )}
+
+      {editingExpense && (
+        <ManualEntryDialog
+          categories={categories}
+          expenseId={editingExpense.id}
+          initialValues={{
+            description: editingExpense.description,
+            amount: editingExpense.amount,
+            category_id: editingExpense.category,
+            date: editingExpense.date,
+            is_recurring: editingExpense.isRecurring,
+            due_day: editingExpense.dueDay,
+          }}
+          onCreated={() => {}}
+          onUpdated={updated => {
+            setExpenses(prev => prev.map(e => e.id === updated.id ? updated : e))
+            setEditingExpense(null)
+          }}
+          onClose={() => setEditingExpense(null)}
         />
       )}
 
@@ -177,7 +199,10 @@ export function ExpensesTab() {
                   <td className="px-4 py-2.5 text-right font-mono font-medium text-rose-400">{exp.amount}</td>
                   <td className="px-4 py-2.5">
                     <div className="flex gap-1 justify-end">
-                      <button className="p-1.5 rounded hover:bg-accent text-muted-foreground hover:text-foreground transition-colors" disabled title="Edit — coming soon">
+                      <button
+                        className="p-1.5 rounded hover:bg-accent text-muted-foreground hover:text-foreground transition-colors"
+                        onClick={() => setEditingExpense(exp)}
+                      >
                         <Pencil size={13} />
                       </button>
                       <button

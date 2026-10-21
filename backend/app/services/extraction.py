@@ -43,7 +43,7 @@ Example output:
 
 class ExtractedItem(BaseModel):
     name: str
-    quantity: Decimal | None = None
+    quantity: int | None = None
     total_price: Decimal
 
 
@@ -60,12 +60,12 @@ def _parse_item(raw: dict) -> ExtractedItem | None:
     except ValueError:
         return None
 
-    quantity: Decimal | None = None
+    quantity: int | None = None
     qty_text = raw.get("quantity")
     if qty_text:
         try:
-            quantity = Decimal(str(qty_text)).quantize(Decimal("0.001"))
-        except InvalidOperation:
+            quantity = int(Decimal(str(qty_text)))
+        except (InvalidOperation, ValueError):
             pass
 
     return ExtractedItem(name=name, quantity=quantity, total_price=total_price)

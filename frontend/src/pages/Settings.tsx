@@ -54,8 +54,8 @@ export function Settings() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 32, maxWidth: 560 }}>
 
       <div>
-        <h1 style={{ fontSize: 22, fontWeight: 700, margin: 0 }}>Settings</h1>
-        <p style={{ fontSize: 13, color: 'var(--color-text-muted)', marginTop: 4 }}>Manage your account preferences.</p>
+        <h1 className="text-xl font-bold tracking-tight">Settings</h1>
+        <p className="text-sm text-muted-foreground mt-1">Manage your account preferences.</p>
       </div>
 
       {/* Profile card */}

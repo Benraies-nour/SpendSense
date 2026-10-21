@@ -91,7 +91,7 @@ export function Auth({ mode, theme, onToggleTheme }: AuthProps) {
         <DialogContent showCloseButton={false}>
           <DialogHeader>
             <DialogTitle>Welcome, {welcomeName}!</DialogTitle>
-            <DialogDescription style={{ color: 'var(--muted-foreground)' }}>
+            <DialogDescription style={{ color: 'var(--foreground)' }}>
               Your account is ready. Start by adding a category and setting your first budget.
             </DialogDescription>
           </DialogHeader>

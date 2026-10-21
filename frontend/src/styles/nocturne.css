@@ -57,8 +57,8 @@
   --color-section-glow: #353b80;
   --color-section-ghost: #4c5397;
 
-  --font-heading: "Inter", system-ui, sans-serif;
-  --font-heading-weight: 500;
+  --font-heading: "Space Grotesk", system-ui, sans-serif;
+  --font-heading-weight: 600;
   --font-body: "Inter", system-ui, sans-serif;
 
   --space-1: 2.8px;
@@ -84,7 +84,7 @@ body {
   color: var(--color-text);
   font-family: var(--font-body);
 }
-h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: var(--font-heading-weight); }
+h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-style: italic; }
 
 
 /* ══════════════════════════════════════════════════════════════════════════

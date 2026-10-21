@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import type { Category } from '../types'
-import { fetchCategories, voiceChat } from '../lib/api'
+import { fetchCategories, transcribeAudio, tts, voiceChat } from '../lib/api'
 import type { VoiceDraft } from '../lib/api'
 import { ManualEntryDialog } from './ManualEntryDialog'
+import { MascotAvatar } from './MascotAvatar'
 
 type MascotState = 'idle' | 'listening' | 'thinking' | 'confirming' | 'speaking'
 
@@ -10,119 +11,188 @@ type Props = {
   onExpenseSaved?: () => void
 }
 
+const WAKE_CHUNK_MS = 3000
+const WAKE_WORDS    = ['nova', 'nava', 'nowa', 'noua', 'no va']
+
 export function Mascot({ onExpenseSaved }: Props) {
   const [state, setState]           = useState<MascotState>('idle')
-  const [transcript, setTranscript] = useState('')
   const [reply, setReply]           = useState('')
   const [draft, setDraft]           = useState<VoiceDraft | null>(null)
   const [categories, setCategories] = useState<Category[]>([])
   const [showForm, setShowForm]     = useState(false)
 
-  const stateRef       = useRef<MascotState>('idle')
-  const recognitionRef = useRef<any>(null)
+  const [heard, setHeard]       = useState('')
+  const [liveText, setLiveText] = useState('')
+
+  const stateRef        = useRef<MascotState>('idle')
+  const streamRef       = useRef<MediaStream | null>(null)
+  const wakeRecorderRef = useRef<MediaRecorder | null>(null)
+  const cmdRecorderRef  = useRef<MediaRecorder | null>(null)
+  const wakeStoppedRef  = useRef(false)
+
   useEffect(() => { stateRef.current = state }, [state])
 
-  // ── SpeechRecognition — wake word "Nova" ─────────────────────
+  // ── Wake word loop (MediaRecorder + Whisper) ──────────────────
   useEffect(() => {
-    const SR = (window as any).SpeechRecognition ?? (window as any).webkitSpeechRecognition
-    if (!SR) { console.warn('SpeechRecognition not supported.'); return }
-
-    let recognition: any = null
     let stopped = false
+    wakeStoppedRef.current = false
 
-    async function start() {
-      try { await navigator.mediaDevices.getUserMedia({ audio: true }) }
-      catch { console.warn('Microphone permission denied.'); return }
-      if (stopped) return
-
-      recognition = new SR()
-      recognitionRef.current     = recognition
-      recognition.continuous     = true
-      recognition.interimResults = true
-
-      recognition.onresult = (event: any) => {
-        const last = event.results[event.results.length - 1]
-        const text = last[0].transcript.toLowerCase().trim()
-
-        if (stateRef.current === 'idle' && text.includes('nova')) {
-          setState('speaking')
-          setReply('Hi! I\'m Nova, your assistant. I\'m listening — how can I help you?')
-          playGreeting(() => {
-            setReply('')
-            setState('listening')
-            setTranscript('')
-            try { recognitionRef.current?.start() } catch (_) {}
-          })
-          return
-        }
-
-        if (stateRef.current === 'listening') {
-          setTranscript(last[0].transcript.trim())
-        }
+    async function initMic() {
+      let stream: MediaStream
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+        streamRef.current = stream
+      } catch {
+        console.warn('[Nova] mic not available')
+        return
       }
-
-      recognition.onend = () => {
-        if (stopped) return
-        // Keep recognition alive while idle (wake word) or listening (active transcription)
-        if (stateRef.current === 'idle' || stateRef.current === 'listening') {
-          setTimeout(() => { if (!stopped) try { recognition.start() } catch (_) {} }, 500)
-        }
-      }
-
-      recognition.onerror = (e: any) => {
-        if (e.error === 'not-allowed') { console.warn('Mic not allowed'); return }
-        if (e.error === 'aborted' || e.error === 'network') return
-        console.error('recognition error:', e.error)
-      }
-
-      recognition.start()
+      recordWakeChunk(stream, () => stopped || wakeStoppedRef.current)
     }
 
-    start()
-    return () => { stopped = true; recognition?.stop() }
+    initMic()
+    return () => {
+      stopped = true
+      wakeStoppedRef.current = true
+      try { wakeRecorderRef.current?.stop() } catch (_) {}
+      streamRef.current?.getTracks().forEach(t => t.stop())
+    }
   }, [])
 
-  // ── Send to backend ───────────────────────────────────────────
-  async function handleSend() {
-    if (!transcript.trim()) return
-    const text = transcript
-    setState('thinking')
-    setTranscript('')
+  function recordWakeChunk(stream: MediaStream, isStopped: () => boolean) {
+    if (isStopped()) return
+    if (stateRef.current !== 'idle') {
+      setTimeout(() => recordWakeChunk(stream, isStopped), 500)
+      return
+    }
+
+    const chunks: Blob[] = []
+    let mr: MediaRecorder
+    try { mr = new MediaRecorder(stream) } catch { return }
+
+    wakeRecorderRef.current = mr
+    mr.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data) }
+    mr.onstop = async () => {
+      if (isStopped()) return
+      if (stateRef.current !== 'idle') {
+        setTimeout(() => recordWakeChunk(stream, isStopped), 500)
+        return
+      }
+      const blob = new Blob(chunks, { type: 'audio/webm' })
+      if (blob.size > 1000) {
+        try {
+          const text = await transcribeAudio(blob)
+          console.log('[Nova wake]:', text)
+          if (WAKE_WORDS.some(w => text.toLowerCase().includes(w)) && stateRef.current === 'idle') {
+            wakeStoppedRef.current = true
+            activateNova(stream, isStopped)
+            return
+          }
+        } catch { /* ignore */ }
+      }
+      setTimeout(() => recordWakeChunk(stream, isStopped), 200)
+    }
+
+    mr.start()
+    setTimeout(() => { try { mr.stop() } catch (_) {} }, WAKE_CHUNK_MS)
+  }
+
+  // ── Activate after wake word ──────────────────────────────────
+  async function activateNova(stream: MediaStream, isStopped: () => boolean) {
+    setState('speaking')
+    const msg = "Hi! I'm Nova. I'm listening — go ahead!"
+    setReply(msg)
 
     try {
+      const b64 = await tts(msg)
+      const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0))
+      const url   = URL.createObjectURL(new Blob([bytes], { type: 'audio/mpeg' }))
+      const audio = new Audio(url)
+      audio.onended = () => { URL.revokeObjectURL(url); setReply(''); startCommandRecording(stream, isStopped) }
+      audio.play()
+    } catch {
+      setTimeout(() => { setReply(''); startCommandRecording(stream, isStopped) }, 1500)
+    }
+  }
+
+  // ── Record user command with live transcription ───────────────
+  function startCommandRecording(stream: MediaStream, isStopped: () => boolean) {
+    const allChunks: Blob[] = []
+    let mr: MediaRecorder
+    try { mr = new MediaRecorder(stream) } catch { return }
+
+    cmdRecorderRef.current = mr
+    setLiveText('')
+    setState('listening')
+
+    // Send a snapshot every 2s for live text
+    let liveTimer: ReturnType<typeof setInterval> | null = null
+    liveTimer = setInterval(async () => {
+      if (allChunks.length === 0) return
+      const snapshot = new Blob([...allChunks], { type: 'audio/webm' })
+      try {
+        const text = await transcribeAudio(snapshot)
+        if (text.trim()) setLiveText(text)
+      } catch { /* ignore */ }
+    }, 2000)
+
+    mr.ondataavailable = (e) => { if (e.data.size > 0) allChunks.push(e.data) }
+    mr.onstop = async () => {
+      if (liveTimer) clearInterval(liveTimer)
+      setState('thinking')
+      const blob = new Blob(allChunks, { type: 'audio/webm' })
+      await handleAudioReady(blob, stream, isStopped)
+    }
+
+    mr.start(500) // collect chunks every 500ms
+  }
+
+  function handleStop() {
+    try { cmdRecorderRef.current?.stop() } catch (_) {}
+  }
+
+  // ── Transcribe + chat ─────────────────────────────────────────
+  async function handleAudioReady(blob: Blob, stream: MediaStream, isStopped: () => boolean) {
+    try {
+      const text = await transcribeAudio(blob)
+      if (!text.trim()) { resumeWake(stream, isStopped); return }
+
+      setHeard(text)
       const result = await voiceChat(text)
 
-      // Play Nova's audio reply
       const bytes = Uint8Array.from(atob(result.audio_b64), c => c.charCodeAt(0))
       const url   = URL.createObjectURL(new Blob([bytes], { type: 'audio/mpeg' }))
       const audio = new Audio(url)
 
       if (result.draft) {
-        // Nova detected an expense — show confirmation UI
         setDraft(result.draft)
         setReply(result.reply_text)
         setState('confirming')
         audio.onended = () => URL.revokeObjectURL(url)
       } else {
-        // Conversational reply — play, then keep listening for the user's next turn
         setState('speaking')
         setReply(result.reply_text)
         audio.onended = () => {
           URL.revokeObjectURL(url)
           setReply('')
-          setTranscript('')
-          setState('listening')
-          try { recognitionRef.current?.start() } catch (_) {}
+          resumeWake(stream, isStopped)
         }
       }
 
       audio.play()
     } catch {
-      setState('idle')
+      resumeWake(stream, isStopped)
     }
   }
 
-  // ── Confirm → open the right form based on the draft type ───
+  function resumeWake(stream: MediaStream, isStopped: () => boolean) {
+    setState('idle')
+    setHeard('')
+    setLiveText('')
+    wakeStoppedRef.current = false
+    if (stream.active) setTimeout(() => recordWakeChunk(stream, isStopped), 200)
+  }
+
+  // ── Confirm ───────────────────────────────────────────────────
   async function handleConfirm() {
     if (!draft) return
 
@@ -137,7 +207,6 @@ export function Mascot({ onExpenseSaved }: Props) {
       return
     }
 
-    // Income or category: navigate to the right sub-tab, pre-fill via sessionStorage
     sessionStorage.setItem('nova_draft', JSON.stringify(draft))
     const targetTab = draft.type === 'income' ? 'incomes' : 'categories'
     window.location.hash = '#/app/manage'
@@ -147,32 +216,10 @@ export function Mascot({ onExpenseSaved }: Props) {
     setState('idle')
   }
 
-  // ── Deny ──────────────────────────────────────────────────────
   function handleDeny() {
     setDraft(null)
     setReply('')
-    setTranscript('')
-    setState('listening')
-    try { recognitionRef.current?.start() } catch (_) {}
-  }
-
-  function handleCancel() {
     setState('idle')
-    setTranscript('')
-  }
-
-  function playGreeting(onEnd: () => void) {
-    const msg = 'Hi! I\'m Nova, your assistant. I\'m listening — how can I help you?'
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel()
-      const utter = new SpeechSynthesisUtterance(msg)
-      utter.lang = 'en-US'
-      utter.rate = 1
-      utter.onend = onEnd
-      window.speechSynthesis.speak(utter)
-    } else {
-      setTimeout(onEnd, 2000)
-    }
   }
 
   // ── Ring color ────────────────────────────────────────────────
@@ -188,21 +235,31 @@ export function Mascot({ onExpenseSaved }: Props) {
     <>
       <div style={container}>
 
+        {state === 'idle' && (
+          <div style={bubbleStyle}>
+            <p style={{ margin: 0 }}>Hi! I&apos;m Nova 👋<br />Say <b>&quot;Nova&quot;</b> to activate me.</p>
+          </div>
+        )}
+
         {state === 'listening' && (
           <div style={bubbleStyle}>
-            <p style={{ margin: '0 0 8px', minHeight: 18 }}>
-              {transcript || 'Je t\'écoute…'}
-            </p>
-            <div style={{ display: 'flex', gap: 6 }}>
-              <button onClick={handleSend}   style={sendBtn}>Envoyer</button>
-              <button onClick={handleCancel} style={cancelBtn}>Annuler</button>
-            </div>
+            <p style={{ margin: '0 0 4px', fontSize: 11, color: 'var(--muted-foreground)' }}>🎙 Recording…</p>
+            {liveText && (
+              <p style={{ margin: '0 0 8px', fontSize: 13, fontStyle: 'italic' }}>{liveText}</p>
+            )}
+            <button onClick={handleStop} style={sendBtn}>Envoyer</button>
           </div>
         )}
 
         {state === 'thinking' && (
           <div style={bubbleStyle}>
-            <p style={{ margin: 0, color: 'var(--muted-foreground)' }}>…</p>
+            {heard ? (
+              <p style={{ margin: 0, fontSize: 12, color: 'var(--muted-foreground)', fontStyle: 'italic' }}>
+                &ldquo;{heard}&rdquo;
+              </p>
+            ) : (
+              <p style={{ margin: 0, color: 'var(--muted-foreground)' }}>…</p>
+            )}
           </div>
         )}
 
@@ -251,17 +308,12 @@ export function Mascot({ onExpenseSaved }: Props) {
         {/* Avatar */}
         <div
           style={{
-            width: 64, height: 64, borderRadius: '50%',
-            border: `3px solid ${ringColor[state]}`,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            background: 'var(--popover)',
-            boxShadow: state !== 'idle' ? `0 0 12px ${ringColor[state]}88` : '0 2px 8px rgba(0,0,0,0.3)',
-            cursor: 'pointer',
-            transition: 'border-color 0.3s, box-shadow 0.3s',
+            filter: `drop-shadow(0 0 8px ${ringColor[state]}66)`,
+            transition: 'filter 0.3s',
           }}
-          title={state === 'idle' ? 'Dis "Nova" pour activer' : undefined}
+          title='Say "Nova" to activate'
         >
-          <span style={{ fontSize: 32 }}>🐨</span>
+          <MascotAvatar state={state} />
         </div>
 
       </div>
@@ -315,7 +367,7 @@ const draftRow: React.CSSProperties = {
 const sendBtn: React.CSSProperties = {
   flex: 1, padding: '4px 0', borderRadius: 6, fontSize: 12, fontWeight: 500,
   cursor: 'pointer', background: 'var(--primary)', color: 'var(--primary-foreground)',
-  border: 'none',
+  border: 'none', width: '100%',
 }
 
 const cancelBtn: React.CSSProperties = {
