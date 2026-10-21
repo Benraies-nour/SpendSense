@@ -1,6 +1,6 @@
 import type { FormEvent } from 'react'
 import { useId, useState } from 'react'
-import { WarningCircleIcon } from '@phosphor-icons/react'
+import { ArrowRightIcon, WarningCircleIcon } from '@phosphor-icons/react'
 import { SiteHeader } from '../components/SiteHeader'
 import { TextField } from '../components/TextField'
 import { navigate, routeHref } from '../hooks/useHashRoute'
@@ -8,6 +8,7 @@ import { login, signUp } from '../lib/api'
 import type { Theme } from '../hooks/useTheme'
 import type { AuthField, AuthMode, AuthValues } from '../lib/validation'
 import { MIN_PASSWORD_LENGTH, validateAuth } from '../lib/validation'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../components/ui/dialog'
 
 type AuthProps = {
   mode: AuthMode
@@ -24,6 +25,7 @@ export function Auth({ mode, theme, onToggleTheme }: AuthProps) {
   const [submitted, setSubmitted] = useState(false)
   const [signInError, setSignInError] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [welcomeName, setWelcomeName] = useState<string | null>(null)
 
   // Switching between log in and sign up starts a fresh submission,
   // but keeps what the user has already typed.
@@ -73,7 +75,7 @@ export function Auth({ mode, theme, onToggleTheme }: AuthProps) {
     setSubmitting(true)
     try {
       await signUp(values.name, values.email, values.password)
-      navigate('overview')
+      setWelcomeName(values.name)
     } catch (err: any) {
       setSignInError(err.message ?? 'Sign up failed.')
     } finally {
@@ -85,6 +87,22 @@ export function Auth({ mode, theme, onToggleTheme }: AuthProps) {
 
   return (
     <div className="page page-auth">
+      <Dialog open={welcomeName !== null}>
+        <DialogContent showCloseButton={false}>
+          <DialogHeader>
+            <DialogTitle>Welcome, {welcomeName}!</DialogTitle>
+            <DialogDescription>
+              Your account is ready. Start by adding a category and setting your first budget.
+            </DialogDescription>
+          </DialogHeader>
+          <button
+            className="btn btn-primary btn-block"
+            onClick={() => navigate('overview')}
+          >
+            Get started <ArrowRightIcon />
+          </button>
+        </DialogContent>
+      </Dialog>
       <SiteHeader theme={theme} onToggleTheme={onToggleTheme} />
       <main className="auth-main">
         <div className="card elev-md auth-card">
