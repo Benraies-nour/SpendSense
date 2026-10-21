@@ -1,6 +1,6 @@
 import type { FormEvent } from 'react'
 import { useId, useState } from 'react'
-import { ArrowRightIcon, WarningCircleIcon } from '@phosphor-icons/react'
+import { ArrowLeftIcon, ArrowRightIcon, WarningCircleIcon } from '@phosphor-icons/react'
 import { SiteHeader } from '../components/SiteHeader'
 import { TextField } from '../components/TextField'
 import { navigate, routeHref } from '../hooks/useHashRoute'
@@ -103,7 +103,11 @@ export function Auth({ mode, theme, onToggleTheme }: AuthProps) {
           </button>
         </DialogContent>
       </Dialog>
-      <SiteHeader theme={theme} onToggleTheme={onToggleTheme} />
+      <SiteHeader theme={theme} onToggleTheme={onToggleTheme}>
+        <a href={routeHref.home} className="btn btn-ghost" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <ArrowLeftIcon size={15} /> Back
+        </a>
+      </SiteHeader>
       <main className="auth-main">
         <div className="card elev-md auth-card">
           <div className="seg auth-tabs" role="tablist">
@@ -121,7 +125,6 @@ export function Auth({ mode, theme, onToggleTheme }: AuthProps) {
             <form className="auth-form" noValidate onSubmit={handleSubmit}>
               <div>
                 <h2>Welcome back</h2>
-                <p className="auth-intro muted">Log in to see this month’s spending.</p>
               </div>
               <TextField
                 label="Email"
@@ -146,7 +149,7 @@ export function Auth({ mode, theme, onToggleTheme }: AuthProps) {
               <button type="submit" className="btn btn-primary btn-block" disabled={submitting}>
                 {submitting ? 'Logging in…' : 'Log in'}
               </button>
-              <p className="auth-switch muted">
+              <p className="auth-switch">
                 New to SpendSense? <a href={routeHref.signup}>Create an account</a>
               </p>
             </form>
@@ -154,7 +157,7 @@ export function Auth({ mode, theme, onToggleTheme }: AuthProps) {
             <form className="auth-form" noValidate onSubmit={handleSubmit}>
               <div>
                 <h2>Create your account</h2>
-                <p className="auth-intro muted">Set budgets by category in a few minutes.</p>
+                
               </div>
               <TextField label="Name" type="text" autoComplete="name" {...fieldProps('name')} />
               <TextField
@@ -180,7 +183,7 @@ export function Auth({ mode, theme, onToggleTheme }: AuthProps) {
               <button type="submit" className="btn btn-primary btn-block" disabled={submitting}>
                 {submitting ? 'Creating account… (may take ~30 s)' : 'Create account'}
               </button>
-              <p className="auth-switch muted">
+              <p className="auth-switch">
                 Already have an account? <a href={routeHref.login}>Log in</a>
               </p>
             </form>

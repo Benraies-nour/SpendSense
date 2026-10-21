@@ -511,7 +511,7 @@ a:hover { color: var(--color-accent-400); }
 .auth-form { display: flex; flex-direction: column; gap: 18px; margin-top: 28px; }
 .auth-form h2 { font-size: 24px; margin: 0 0 4px; }
 .auth-form .btn-block { min-height: 44px; font-size: 15px; }
-.auth-switch { margin: 4px 0 0; font-size: 14px; }
+.auth-switch { margin: 4px 0 0; font-size: 14px; color: var(--foreground); }
 
 .field > label, .field-label-row > label { font-size: 13px; color: var(--label); }
 .field-label-row {
@@ -524,7 +524,7 @@ a:hover { color: var(--color-accent-400); }
 .field-label-row > a { font-size: 13px; }
 .field .input { min-height: 44px; }
 .field .input[aria-invalid='true'] { border-color: var(--color-danger); }
-.field-hint { margin: 6px 0 0; font-size: 13px; color: var(--muted); }
+.field-hint { margin: 6px 0 0; font-size: 13px; color: var(--muted-foreground); }
 .field-error,
 .form-error {
   display: flex;
@@ -536,7 +536,7 @@ a:hover { color: var(--color-accent-400); }
 .form-error { margin: 0; color: var(--color-danger); }
 
 /* — shared — */
-.muted { color: var(--muted); }
+.muted { color: var(--muted-foreground); }
 .tabular { font-variant-numeric: tabular-nums; }
 .text-xs { font-size: 11px; }
 .auth-intro { margin: 0; font-size: 14px; }
