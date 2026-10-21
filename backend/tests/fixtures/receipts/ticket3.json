@@ -1,0 +1,2595 @@
+{
+  "apiVersion": "2024-11-30",
+  "modelId": "prebuilt-receipt",
+  "stringIndexType": "textElements",
+  "content": "PAUL\ndepuis 1889\nAv de la république Imm\nEssãada, Marsa 2070 Tél: 36 345 405 /\n36 345 402\n01/05/2017 16:14 Commande 00226-\n001-0014\nCaissier: Basma Hamzaoui\nTable : T12\nArticles:\nTourte Légumes\nTARTELETTE\n12,000 DT\n1\nT\nCHOCOLAT\n9,000 DT\nViennois nature\n1\n2,500 DT\nFlûte nature\n1\n1,000 DT\nSous-total :\n24,500 DT\nRéduction :\n0,000 DT\nTotal:\n24,500 DT\nESPECES (TND)\n50,000 DT\nRendu :\n25,500 DT",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "angle": -2.7981998920440674,
+      "width": 247,
+      "height": 373,
+      "unit": "pixel",
+      "words": [
+        {
+          "content": "PAUL",
+          "polygon": [
+            47,
+            40,
+            178,
+            38,
+            178,
+            73,
+            48,
+            75
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 0,
+            "length": 4
+          }
+        },
+        {
+          "content": "depuis",
+          "polygon": [
+            110,
+            74,
+            146,
+            74,
+            146,
+            86,
+            110,
+            87
+          ],
+          "confidence": 0.881,
+          "span": {
+            "offset": 5,
+            "length": 6
+          }
+        },
+        {
+          "content": "1889",
+          "polygon": [
+            150,
+            74,
+            177,
+            73,
+            178,
+            85,
+            151,
+            86
+          ],
+          "confidence": 0.7,
+          "span": {
+            "offset": 12,
+            "length": 4
+          }
+        },
+        {
+          "content": "Av",
+          "polygon": [
+            48,
+            117,
+            62,
+            117,
+            63,
+            128,
+            48,
+            129
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 17,
+            "length": 2
+          }
+        },
+        {
+          "content": "de",
+          "polygon": [
+            67,
+            117,
+            80,
+            117,
+            80,
+            128,
+            67,
+            128
+          ],
+          "confidence": 0.994,
+          "span": {
+            "offset": 20,
+            "length": 2
+          }
+        },
+        {
+          "content": "la",
+          "polygon": [
+            84,
+            116,
+            94,
+            116,
+            94,
+            127,
+            85,
+            128
+          ],
+          "confidence": 0.963,
+          "span": {
+            "offset": 23,
+            "length": 2
+          }
+        },
+        {
+          "content": "république",
+          "polygon": [
+            99,
+            116,
+            155,
+            115,
+            156,
+            126,
+            99,
+            127
+          ],
+          "confidence": 0.99,
+          "span": {
+            "offset": 26,
+            "length": 10
+          }
+        },
+        {
+          "content": "Imm",
+          "polygon": [
+            160,
+            115,
+            186,
+            114,
+            186,
+            125,
+            160,
+            126
+          ],
+          "confidence": 0.973,
+          "span": {
+            "offset": 37,
+            "length": 3
+          }
+        },
+        {
+          "content": "Essãada,",
+          "polygon": [
+            10,
+            130,
+            57,
+            129,
+            57,
+            141,
+            10,
+            142
+          ],
+          "confidence": 0.695,
+          "span": {
+            "offset": 41,
+            "length": 8
+          }
+        },
+        {
+          "content": "Marsa",
+          "polygon": [
+            59,
+            129,
+            93,
+            128,
+            93,
+            139,
+            59,
+            140
+          ],
+          "confidence": 0.994,
+          "span": {
+            "offset": 50,
+            "length": 5
+          }
+        },
+        {
+          "content": "2070",
+          "polygon": [
+            98,
+            128,
+            124,
+            127,
+            124,
+            138,
+            98,
+            139
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 56,
+            "length": 4
+          }
+        },
+        {
+          "content": "Tél:",
+          "polygon": [
+            128,
+            127,
+            148,
+            126,
+            148,
+            137,
+            128,
+            138
+          ],
+          "confidence": 0.938,
+          "span": {
+            "offset": 61,
+            "length": 4
+          }
+        },
+        {
+          "content": "36",
+          "polygon": [
+            153,
+            126,
+            166,
+            126,
+            166,
+            137,
+            154,
+            137
+          ],
+          "confidence": 0.993,
+          "span": {
+            "offset": 66,
+            "length": 2
+          }
+        },
+        {
+          "content": "345",
+          "polygon": [
+            170,
+            126,
+            189,
+            125,
+            189,
+            137,
+            170,
+            137
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 69,
+            "length": 3
+          }
+        },
+        {
+          "content": "405",
+          "polygon": [
+            193,
+            125,
+            212,
+            125,
+            213,
+            136,
+            193,
+            137
+          ],
+          "confidence": 0.994,
+          "span": {
+            "offset": 73,
+            "length": 3
+          }
+        },
+        {
+          "content": "/",
+          "polygon": [
+            216,
+            125,
+            222,
+            125,
+            223,
+            136,
+            216,
+            136
+          ],
+          "confidence": 0.991,
+          "span": {
+            "offset": 77,
+            "length": 1
+          }
+        },
+        {
+          "content": "36",
+          "polygon": [
+            87,
+            140,
+            100,
+            140,
+            101,
+            150,
+            88,
+            151
+          ],
+          "confidence": 0.993,
+          "span": {
+            "offset": 79,
+            "length": 2
+          }
+        },
+        {
+          "content": "345",
+          "polygon": [
+            105,
+            139,
+            124,
+            139,
+            125,
+            149,
+            106,
+            150
+          ],
+          "confidence": 0.989,
+          "span": {
+            "offset": 82,
+            "length": 3
+          }
+        },
+        {
+          "content": "402",
+          "polygon": [
+            129,
+            139,
+            149,
+            138,
+            150,
+            149,
+            129,
+            149
+          ],
+          "confidence": 0.998,
+          "span": {
+            "offset": 86,
+            "length": 3
+          }
+        },
+        {
+          "content": "01/05/2017",
+          "polygon": [
+            14,
+            159,
+            78,
+            157,
+            78,
+            169,
+            14,
+            171
+          ],
+          "confidence": 0.993,
+          "span": {
+            "offset": 90,
+            "length": 10
+          }
+        },
+        {
+          "content": "16:14",
+          "polygon": [
+            83,
+            157,
+            113,
+            156,
+            113,
+            167,
+            84,
+            169
+          ],
+          "confidence": 0.976,
+          "span": {
+            "offset": 101,
+            "length": 5
+          }
+        },
+        {
+          "content": "Commande",
+          "polygon": [
+            118,
+            156,
+            177,
+            154,
+            178,
+            165,
+            119,
+            167
+          ],
+          "confidence": 0.996,
+          "span": {
+            "offset": 107,
+            "length": 8
+          }
+        },
+        {
+          "content": "00226-",
+          "polygon": [
+            182,
+            154,
+            220,
+            152,
+            220,
+            164,
+            182,
+            165
+          ],
+          "confidence": 0.994,
+          "span": {
+            "offset": 116,
+            "length": 6
+          }
+        },
+        {
+          "content": "001-0014",
+          "polygon": [
+            93,
+            169,
+            145,
+            167,
+            146,
+            177,
+            94,
+            179
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 123,
+            "length": 8
+          }
+        },
+        {
+          "content": "Caissier:",
+          "polygon": [
+            8,
+            189,
+            58,
+            187,
+            59,
+            197,
+            8,
+            199
+          ],
+          "confidence": 0.838,
+          "span": {
+            "offset": 132,
+            "length": 9
+          }
+        },
+        {
+          "content": "Basma",
+          "polygon": [
+            62,
+            187,
+            99,
+            185,
+            99,
+            196,
+            63,
+            197
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 142,
+            "length": 5
+          }
+        },
+        {
+          "content": "Hamzaoui",
+          "polygon": [
+            104,
+            185,
+            159,
+            183,
+            159,
+            194,
+            104,
+            196
+          ],
+          "confidence": 0.59,
+          "span": {
+            "offset": 148,
+            "length": 8
+          }
+        },
+        {
+          "content": "Table",
+          "polygon": [
+            8,
+            200,
+            38,
+            198,
+            39,
+            209,
+            8,
+            210
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 157,
+            "length": 5
+          }
+        },
+        {
+          "content": ":",
+          "polygon": [
+            44,
+            198,
+            47,
+            198,
+            47,
+            209,
+            44,
+            209
+          ],
+          "confidence": 0.996,
+          "span": {
+            "offset": 163,
+            "length": 1
+          }
+        },
+        {
+          "content": "T12",
+          "polygon": [
+            51,
+            198,
+            73,
+            197,
+            74,
+            208,
+            52,
+            208
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 165,
+            "length": 3
+          }
+        },
+        {
+          "content": "Articles:",
+          "polygon": [
+            8,
+            211,
+            55,
+            210,
+            56,
+            219,
+            8,
+            220
+          ],
+          "confidence": 0.973,
+          "span": {
+            "offset": 169,
+            "length": 9
+          }
+        },
+        {
+          "content": "Tourte",
+          "polygon": [
+            8,
+            221,
+            44,
+            220,
+            45,
+            230,
+            9,
+            232
+          ],
+          "confidence": 0.971,
+          "span": {
+            "offset": 179,
+            "length": 6
+          }
+        },
+        {
+          "content": "Légumes",
+          "polygon": [
+            49,
+            220,
+            100,
+            218,
+            100,
+            228,
+            50,
+            230
+          ],
+          "confidence": 0.988,
+          "span": {
+            "offset": 186,
+            "length": 7
+          }
+        },
+        {
+          "content": "TARTELETTE",
+          "polygon": [
+            8,
+            233,
+            78,
+            230,
+            78,
+            240,
+            8,
+            244
+          ],
+          "confidence": 0.993,
+          "span": {
+            "offset": 194,
+            "length": 10
+          }
+        },
+        {
+          "content": "12,000",
+          "polygon": [
+            175,
+            214,
+            209,
+            212,
+            210,
+            223,
+            176,
+            225
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 205,
+            "length": 6
+          }
+        },
+        {
+          "content": "DT",
+          "polygon": [
+            214,
+            212,
+            229,
+            211,
+            230,
+            222,
+            215,
+            223
+          ],
+          "confidence": 0.987,
+          "span": {
+            "offset": 212,
+            "length": 2
+          }
+        },
+        {
+          "content": "1",
+          "polygon": [
+            148,
+            234,
+            154,
+            234,
+            154,
+            243,
+            149,
+            244
+          ],
+          "confidence": 0.995,
+          "span": {
+            "offset": 215,
+            "length": 1
+          }
+        },
+        {
+          "content": "T",
+          "polygon": [
+            154,
+            225,
+            148,
+            226,
+            147,
+            216,
+            153,
+            216
+          ],
+          "confidence": 0.694,
+          "span": {
+            "offset": 217,
+            "length": 1
+          }
+        },
+        {
+          "content": "CHOCOLAT",
+          "polygon": [
+            8,
+            247,
+            71,
+            243,
+            72,
+            254,
+            8,
+            258
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 219,
+            "length": 8
+          }
+        },
+        {
+          "content": "9,000",
+          "polygon": [
+            181,
+            232,
+            210,
+            230,
+            212,
+            242,
+            182,
+            244
+          ],
+          "confidence": 0.994,
+          "span": {
+            "offset": 228,
+            "length": 5
+          }
+        },
+        {
+          "content": "DT",
+          "polygon": [
+            215,
+            230,
+            231,
+            229,
+            232,
+            240,
+            216,
+            241
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 234,
+            "length": 2
+          }
+        },
+        {
+          "content": "Viennois",
+          "polygon": [
+            8,
+            259,
+            56,
+            256,
+            56,
+            267,
+            8,
+            269
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 237,
+            "length": 8
+          }
+        },
+        {
+          "content": "nature",
+          "polygon": [
+            61,
+            256,
+            98,
+            254,
+            99,
+            265,
+            61,
+            267
+          ],
+          "confidence": 0.993,
+          "span": {
+            "offset": 246,
+            "length": 6
+          }
+        },
+        {
+          "content": "1",
+          "polygon": [
+            148,
+            252,
+            155,
+            252,
+            156,
+            261,
+            150,
+            262
+          ],
+          "confidence": 0.962,
+          "span": {
+            "offset": 253,
+            "length": 1
+          }
+        },
+        {
+          "content": "2,500",
+          "polygon": [
+            183,
+            250,
+            212,
+            248,
+            213,
+            259,
+            184,
+            261
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 255,
+            "length": 5
+          }
+        },
+        {
+          "content": "DT",
+          "polygon": [
+            217,
+            248,
+            234,
+            247,
+            235,
+            258,
+            218,
+            259
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 261,
+            "length": 2
+          }
+        },
+        {
+          "content": "Flûte",
+          "polygon": [
+            7,
+            272,
+            35,
+            270,
+            36,
+            281,
+            7,
+            282
+          ],
+          "confidence": 0.588,
+          "span": {
+            "offset": 264,
+            "length": 5
+          }
+        },
+        {
+          "content": "nature",
+          "polygon": [
+            40,
+            270,
+            78,
+            268,
+            78,
+            279,
+            41,
+            281
+          ],
+          "confidence": 0.989,
+          "span": {
+            "offset": 270,
+            "length": 6
+          }
+        },
+        {
+          "content": "1",
+          "polygon": [
+            149,
+            264,
+            156,
+            264,
+            157,
+            274,
+            150,
+            274
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 277,
+            "length": 1
+          }
+        },
+        {
+          "content": "1,000",
+          "polygon": [
+            184,
+            262,
+            214,
+            261,
+            215,
+            272,
+            185,
+            274
+          ],
+          "confidence": 0.993,
+          "span": {
+            "offset": 279,
+            "length": 5
+          }
+        },
+        {
+          "content": "DT",
+          "polygon": [
+            219,
+            260,
+            235,
+            260,
+            236,
+            271,
+            220,
+            272
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 285,
+            "length": 2
+          }
+        },
+        {
+          "content": "Sous-total",
+          "polygon": [
+            7,
+            291,
+            66,
+            287,
+            66,
+            299,
+            7,
+            302
+          ],
+          "confidence": 0.989,
+          "span": {
+            "offset": 288,
+            "length": 10
+          }
+        },
+        {
+          "content": ":",
+          "polygon": [
+            72,
+            287,
+            76,
+            287,
+            77,
+            299,
+            73,
+            299
+          ],
+          "confidence": 0.977,
+          "span": {
+            "offset": 299,
+            "length": 1
+          }
+        },
+        {
+          "content": "24,500",
+          "polygon": [
+            178,
+            282,
+            215,
+            280,
+            217,
+            292,
+            179,
+            294
+          ],
+          "confidence": 0.994,
+          "span": {
+            "offset": 301,
+            "length": 6
+          }
+        },
+        {
+          "content": "DT",
+          "polygon": [
+            220,
+            279,
+            238,
+            278,
+            239,
+            290,
+            221,
+            291
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 308,
+            "length": 2
+          }
+        },
+        {
+          "content": "Réduction",
+          "polygon": [
+            7,
+            304,
+            64,
+            301,
+            64,
+            313,
+            7,
+            315
+          ],
+          "confidence": 0.987,
+          "span": {
+            "offset": 311,
+            "length": 9
+          }
+        },
+        {
+          "content": ":",
+          "polygon": [
+            70,
+            301,
+            75,
+            301,
+            75,
+            312,
+            70,
+            312
+          ],
+          "confidence": 0.976,
+          "span": {
+            "offset": 321,
+            "length": 1
+          }
+        },
+        {
+          "content": "0,000",
+          "polygon": [
+            186,
+            294,
+            216,
+            293,
+            218,
+            304,
+            187,
+            306
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 323,
+            "length": 5
+          }
+        },
+        {
+          "content": "DT",
+          "polygon": [
+            222,
+            292,
+            238,
+            292,
+            239,
+            303,
+            223,
+            304
+          ],
+          "confidence": 0.976,
+          "span": {
+            "offset": 329,
+            "length": 2
+          }
+        },
+        {
+          "content": "Total:",
+          "polygon": [
+            7,
+            318,
+            59,
+            316,
+            60,
+            332,
+            8,
+            334
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 332,
+            "length": 6
+          }
+        },
+        {
+          "content": "24,500",
+          "polygon": [
+            147,
+            309,
+            207,
+            307,
+            208,
+            325,
+            148,
+            328
+          ],
+          "confidence": 0.995,
+          "span": {
+            "offset": 339,
+            "length": 6
+          }
+        },
+        {
+          "content": "DT",
+          "polygon": [
+            215,
+            306,
+            240,
+            305,
+            240,
+            323,
+            217,
+            324
+          ],
+          "confidence": 0.993,
+          "span": {
+            "offset": 346,
+            "length": 2
+          }
+        },
+        {
+          "content": "ESPECES",
+          "polygon": [
+            7,
+            344,
+            60,
+            340,
+            60,
+            353,
+            8,
+            356
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 349,
+            "length": 7
+          }
+        },
+        {
+          "content": "(TND)",
+          "polygon": [
+            65,
+            340,
+            101,
+            338,
+            101,
+            351,
+            66,
+            353
+          ],
+          "confidence": 0.963,
+          "span": {
+            "offset": 357,
+            "length": 5
+          }
+        },
+        {
+          "content": "50,000",
+          "polygon": [
+            182,
+            333,
+            220,
+            331,
+            221,
+            343,
+            183,
+            346
+          ],
+          "confidence": 0.994,
+          "span": {
+            "offset": 363,
+            "length": 6
+          }
+        },
+        {
+          "content": "DT",
+          "polygon": [
+            225,
+            330,
+            243,
+            329,
+            243,
+            342,
+            226,
+            343
+          ],
+          "confidence": 0.989,
+          "span": {
+            "offset": 370,
+            "length": 2
+          }
+        },
+        {
+          "content": "Rendu",
+          "polygon": [
+            9,
+            364,
+            44,
+            362,
+            45,
+            372,
+            9,
+            372
+          ],
+          "confidence": 0.977,
+          "span": {
+            "offset": 373,
+            "length": 5
+          }
+        },
+        {
+          "content": ":",
+          "polygon": [
+            50,
+            362,
+            55,
+            362,
+            55,
+            372,
+            51,
+            372
+          ],
+          "confidence": 0.98,
+          "span": {
+            "offset": 379,
+            "length": 1
+          }
+        },
+        {
+          "content": "25,500",
+          "polygon": [
+            182,
+            353,
+            221,
+            351,
+            222,
+            364,
+            183,
+            366
+          ],
+          "confidence": 0.995,
+          "span": {
+            "offset": 381,
+            "length": 6
+          }
+        },
+        {
+          "content": "DT",
+          "polygon": [
+            227,
+            351,
+            246,
+            350,
+            246,
+            363,
+            227,
+            363
+          ],
+          "confidence": 0.989,
+          "span": {
+            "offset": 388,
+            "length": 2
+          }
+        }
+      ],
+      "lines": [
+        {
+          "content": "PAUL",
+          "polygon": [
+            47,
+            40,
+            177,
+            38,
+            177,
+            74,
+            47,
+            75
+          ],
+          "spans": [
+            {
+              "offset": 0,
+              "length": 4
+            }
+          ]
+        },
+        {
+          "content": "depuis 1889",
+          "polygon": [
+            110,
+            74,
+            177,
+            73,
+            177,
+            85,
+            110,
+            87
+          ],
+          "spans": [
+            {
+              "offset": 5,
+              "length": 11
+            }
+          ]
+        },
+        {
+          "content": "Av de la république Imm",
+          "polygon": [
+            48,
+            117,
+            186,
+            114,
+            186,
+            125,
+            48,
+            128
+          ],
+          "spans": [
+            {
+              "offset": 17,
+              "length": 23
+            }
+          ]
+        },
+        {
+          "content": "Essãada, Marsa 2070 Tél: 36 345 405 /",
+          "polygon": [
+            10,
+            130,
+            222,
+            124,
+            222,
+            136,
+            10,
+            142
+          ],
+          "spans": [
+            {
+              "offset": 41,
+              "length": 37
+            }
+          ]
+        },
+        {
+          "content": "36 345 402",
+          "polygon": [
+            87,
+            140,
+            149,
+            138,
+            149,
+            149,
+            88,
+            151
+          ],
+          "spans": [
+            {
+              "offset": 79,
+              "length": 10
+            }
+          ]
+        },
+        {
+          "content": "01/05/2017 16:14 Commande 00226-",
+          "polygon": [
+            14,
+            159,
+            219,
+            152,
+            219,
+            164,
+            14,
+            171
+          ],
+          "spans": [
+            {
+              "offset": 90,
+              "length": 32
+            }
+          ]
+        },
+        {
+          "content": "001-0014",
+          "polygon": [
+            93,
+            169,
+            145,
+            167,
+            146,
+            177,
+            93,
+            179
+          ],
+          "spans": [
+            {
+              "offset": 123,
+              "length": 8
+            }
+          ]
+        },
+        {
+          "content": "Caissier: Basma Hamzaoui",
+          "polygon": [
+            8,
+            188,
+            159,
+            183,
+            159,
+            194,
+            8,
+            199
+          ],
+          "spans": [
+            {
+              "offset": 132,
+              "length": 24
+            }
+          ]
+        },
+        {
+          "content": "Table : T12",
+          "polygon": [
+            8,
+            199,
+            73,
+            197,
+            73,
+            208,
+            8,
+            210
+          ],
+          "spans": [
+            {
+              "offset": 157,
+              "length": 11
+            }
+          ]
+        },
+        {
+          "content": "Articles:",
+          "polygon": [
+            8,
+            211,
+            55,
+            210,
+            55,
+            219,
+            8,
+            220
+          ],
+          "spans": [
+            {
+              "offset": 169,
+              "length": 9
+            }
+          ]
+        },
+        {
+          "content": "Tourte Légumes",
+          "polygon": [
+            8,
+            221,
+            99,
+            218,
+            100,
+            228,
+            8,
+            232
+          ],
+          "spans": [
+            {
+              "offset": 179,
+              "length": 14
+            }
+          ]
+        },
+        {
+          "content": "TARTELETTE",
+          "polygon": [
+            8,
+            233,
+            77,
+            230,
+            78,
+            240,
+            8,
+            244
+          ],
+          "spans": [
+            {
+              "offset": 194,
+              "length": 10
+            }
+          ]
+        },
+        {
+          "content": "12,000 DT",
+          "polygon": [
+            175,
+            214,
+            229,
+            211,
+            230,
+            222,
+            176,
+            225
+          ],
+          "spans": [
+            {
+              "offset": 205,
+              "length": 9
+            }
+          ]
+        },
+        {
+          "content": "1",
+          "polygon": [
+            148,
+            234,
+            154,
+            234,
+            154,
+            243,
+            149,
+            243
+          ],
+          "spans": [
+            {
+              "offset": 215,
+              "length": 1
+            }
+          ]
+        },
+        {
+          "content": "T",
+          "polygon": [
+            154,
+            225,
+            148,
+            226,
+            147,
+            216,
+            153,
+            216
+          ],
+          "spans": [
+            {
+              "offset": 217,
+              "length": 1
+            }
+          ]
+        },
+        {
+          "content": "CHOCOLAT",
+          "polygon": [
+            7,
+            247,
+            71,
+            243,
+            71,
+            254,
+            8,
+            258
+          ],
+          "spans": [
+            {
+              "offset": 219,
+              "length": 8
+            }
+          ]
+        },
+        {
+          "content": "9,000 DT",
+          "polygon": [
+            181,
+            232,
+            231,
+            228,
+            232,
+            240,
+            182,
+            244
+          ],
+          "spans": [
+            {
+              "offset": 228,
+              "length": 8
+            }
+          ]
+        },
+        {
+          "content": "Viennois nature",
+          "polygon": [
+            8,
+            259,
+            98,
+            254,
+            99,
+            265,
+            8,
+            270
+          ],
+          "spans": [
+            {
+              "offset": 237,
+              "length": 15
+            }
+          ]
+        },
+        {
+          "content": "1",
+          "polygon": [
+            148,
+            252,
+            154,
+            251,
+            155,
+            261,
+            149,
+            262
+          ],
+          "spans": [
+            {
+              "offset": 253,
+              "length": 1
+            }
+          ]
+        },
+        {
+          "content": "2,500 DT",
+          "polygon": [
+            183,
+            250,
+            234,
+            247,
+            234,
+            258,
+            183,
+            261
+          ],
+          "spans": [
+            {
+              "offset": 255,
+              "length": 8
+            }
+          ]
+        },
+        {
+          "content": "Flûte nature",
+          "polygon": [
+            7,
+            271,
+            77,
+            268,
+            78,
+            279,
+            7,
+            282
+          ],
+          "spans": [
+            {
+              "offset": 264,
+              "length": 12
+            }
+          ]
+        },
+        {
+          "content": "1",
+          "polygon": [
+            149,
+            264,
+            155,
+            264,
+            156,
+            274,
+            150,
+            274
+          ],
+          "spans": [
+            {
+              "offset": 277,
+              "length": 1
+            }
+          ]
+        },
+        {
+          "content": "1,000 DT",
+          "polygon": [
+            184,
+            262,
+            235,
+            259,
+            236,
+            271,
+            185,
+            274
+          ],
+          "spans": [
+            {
+              "offset": 279,
+              "length": 8
+            }
+          ]
+        },
+        {
+          "content": "Sous-total :",
+          "polygon": [
+            7,
+            290,
+            76,
+            287,
+            76,
+            299,
+            7,
+            302
+          ],
+          "spans": [
+            {
+              "offset": 288,
+              "length": 12
+            }
+          ]
+        },
+        {
+          "content": "24,500 DT",
+          "polygon": [
+            178,
+            282,
+            237,
+            278,
+            238,
+            290,
+            178,
+            294
+          ],
+          "spans": [
+            {
+              "offset": 301,
+              "length": 9
+            }
+          ]
+        },
+        {
+          "content": "Réduction :",
+          "polygon": [
+            7,
+            304,
+            74,
+            301,
+            75,
+            312,
+            7,
+            315
+          ],
+          "spans": [
+            {
+              "offset": 311,
+              "length": 11
+            }
+          ]
+        },
+        {
+          "content": "0,000 DT",
+          "polygon": [
+            186,
+            294,
+            238,
+            291,
+            238,
+            303,
+            186,
+            306
+          ],
+          "spans": [
+            {
+              "offset": 323,
+              "length": 8
+            }
+          ]
+        },
+        {
+          "content": "Total:",
+          "polygon": [
+            7,
+            318,
+            58,
+            315,
+            59,
+            332,
+            8,
+            334
+          ],
+          "spans": [
+            {
+              "offset": 332,
+              "length": 6
+            }
+          ]
+        },
+        {
+          "content": "24,500 DT",
+          "polygon": [
+            147,
+            309,
+            239,
+            305,
+            240,
+            324,
+            148,
+            328
+          ],
+          "spans": [
+            {
+              "offset": 339,
+              "length": 9
+            }
+          ]
+        },
+        {
+          "content": "ESPECES (TND)",
+          "polygon": [
+            7,
+            343,
+            100,
+            338,
+            101,
+            351,
+            8,
+            356
+          ],
+          "spans": [
+            {
+              "offset": 349,
+              "length": 13
+            }
+          ]
+        },
+        {
+          "content": "50,000 DT",
+          "polygon": [
+            182,
+            333,
+            242,
+            329,
+            243,
+            342,
+            183,
+            346
+          ],
+          "spans": [
+            {
+              "offset": 363,
+              "length": 9
+            }
+          ]
+        },
+        {
+          "content": "Rendu :",
+          "polygon": [
+            9,
+            363,
+            54,
+            362,
+            55,
+            372,
+            9,
+            372
+          ],
+          "spans": [
+            {
+              "offset": 373,
+              "length": 7
+            }
+          ]
+        },
+        {
+          "content": "25,500 DT",
+          "polygon": [
+            182,
+            352,
+            246,
+            350,
+            246,
+            363,
+            183,
+            365
+          ],
+          "spans": [
+            {
+              "offset": 381,
+              "length": 9
+            }
+          ]
+        }
+      ],
+      "spans": [
+        {
+          "offset": 0,
+          "length": 390
+        }
+      ]
+    }
+  ],
+  "styles": [],
+  "documents": [
+    {
+      "docType": "receipt.retailMeal",
+      "boundingRegions": [
+        {
+          "pageNumber": 1,
+          "polygon": [
+            0,
+            0,
+            247,
+            0,
+            247,
+            373,
+            0,
+            373
+          ]
+        }
+      ],
+      "fields": {
+        "CountryRegion": {
+          "type": "countryRegion",
+          "valueCountryRegion": "FRA",
+          "confidence": 0.995
+        },
+        "Items": {
+          "type": "array",
+          "valueArray": [
+            {
+              "type": "object",
+              "valueObject": {
+                "Description": {
+                  "type": "string",
+                  "valueString": "Tourte Légumes",
+                  "content": "Tourte Légumes",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        8,
+                        221,
+                        100,
+                        217,
+                        100,
+                        228,
+                        8,
+                        232
+                      ]
+                    }
+                  ],
+                  "confidence": 0.982,
+                  "spans": [
+                    {
+                      "offset": 179,
+                      "length": 14
+                    }
+                  ]
+                },
+                "TotalPrice": {
+                  "type": "currency",
+                  "valueCurrency": {
+                    "amount": 12.0,
+                    "currencyCode": "EUR"
+                  },
+                  "content": "12,000",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        175,
+                        214,
+                        209,
+                        212,
+                        210,
+                        223,
+                        176,
+                        225
+                      ]
+                    }
+                  ],
+                  "confidence": 0.989,
+                  "spans": [
+                    {
+                      "offset": 205,
+                      "length": 6
+                    }
+                  ]
+                }
+              },
+              "content": "Tourte Légumes\n12,000 DT\nT",
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    8,
+                    220,
+                    230,
+                    211,
+                    230,
+                    223,
+                    8,
+                    232
+                  ]
+                }
+              ],
+              "confidence": 0.961,
+              "spans": [
+                {
+                  "offset": 179,
+                  "length": 14
+                },
+                {
+                  "offset": 205,
+                  "length": 9
+                },
+                {
+                  "offset": 217,
+                  "length": 1
+                }
+              ]
+            },
+            {
+              "type": "object",
+              "valueObject": {
+                "Description": {
+                  "type": "string",
+                  "valueString": "TARTELETTE",
+                  "content": "TARTELETTE",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        8,
+                        233,
+                        78,
+                        230,
+                        78,
+                        240,
+                        8,
+                        244
+                      ]
+                    }
+                  ],
+                  "confidence": 0.983,
+                  "spans": [
+                    {
+                      "offset": 194,
+                      "length": 10
+                    }
+                  ]
+                },
+                "Quantity": {
+                  "type": "number",
+                  "valueNumber": 1,
+                  "content": "1",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        148,
+                        234,
+                        154,
+                        234,
+                        154,
+                        243,
+                        149,
+                        244
+                      ]
+                    }
+                  ],
+                  "confidence": 0.987,
+                  "spans": [
+                    {
+                      "offset": 215,
+                      "length": 1
+                    }
+                  ]
+                },
+                "TotalPrice": {
+                  "type": "currency",
+                  "valueCurrency": {
+                    "amount": 9.0,
+                    "currencyCode": "EUR"
+                  },
+                  "content": "9,000",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        181,
+                        232,
+                        210,
+                        230,
+                        212,
+                        242,
+                        182,
+                        244
+                      ]
+                    }
+                  ],
+                  "confidence": 0.989,
+                  "spans": [
+                    {
+                      "offset": 228,
+                      "length": 5
+                    }
+                  ]
+                }
+              },
+              "content": "TARTELETTE\n1\n9,000 DT",
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    7,
+                    233,
+                    231,
+                    219,
+                    232,
+                    241,
+                    9,
+                    255
+                  ]
+                }
+              ],
+              "confidence": 0.972,
+              "spans": [
+                {
+                  "offset": 194,
+                  "length": 10
+                },
+                {
+                  "offset": 215,
+                  "length": 1
+                },
+                {
+                  "offset": 228,
+                  "length": 8
+                }
+              ]
+            },
+            {
+              "type": "object",
+              "valueObject": {
+                "Description": {
+                  "type": "string",
+                  "valueString": "Viennois nature",
+                  "content": "Viennois nature",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        7,
+                        259,
+                        98,
+                        254,
+                        99,
+                        265,
+                        8,
+                        270
+                      ]
+                    }
+                  ],
+                  "confidence": 0.982,
+                  "spans": [
+                    {
+                      "offset": 237,
+                      "length": 15
+                    }
+                  ]
+                },
+                "Quantity": {
+                  "type": "number",
+                  "valueNumber": 1,
+                  "content": "1",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        148,
+                        252,
+                        155,
+                        252,
+                        156,
+                        261,
+                        150,
+                        262
+                      ]
+                    }
+                  ],
+                  "confidence": 0.987,
+                  "spans": [
+                    {
+                      "offset": 253,
+                      "length": 1
+                    }
+                  ]
+                },
+                "TotalPrice": {
+                  "type": "currency",
+                  "valueCurrency": {
+                    "amount": 2.5,
+                    "currencyCode": "EUR"
+                  },
+                  "content": "2,500",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        183,
+                        250,
+                        212,
+                        248,
+                        213,
+                        259,
+                        184,
+                        261
+                      ]
+                    }
+                  ],
+                  "confidence": 0.989,
+                  "spans": [
+                    {
+                      "offset": 255,
+                      "length": 5
+                    }
+                  ]
+                }
+              },
+              "content": "Viennois nature\n1\n2,500 DT",
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    7,
+                    259,
+                    234,
+                    246,
+                    235,
+                    258,
+                    8,
+                    271
+                  ]
+                }
+              ],
+              "confidence": 0.965,
+              "spans": [
+                {
+                  "offset": 237,
+                  "length": 26
+                }
+              ]
+            },
+            {
+              "type": "object",
+              "valueObject": {
+                "Description": {
+                  "type": "string",
+                  "valueString": "Flûte nature",
+                  "content": "Flûte nature",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        6,
+                        272,
+                        78,
+                        268,
+                        79,
+                        279,
+                        7,
+                        283
+                      ]
+                    }
+                  ],
+                  "confidence": 0.977,
+                  "spans": [
+                    {
+                      "offset": 264,
+                      "length": 12
+                    }
+                  ]
+                },
+                "Quantity": {
+                  "type": "number",
+                  "valueNumber": 1,
+                  "content": "1",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        149,
+                        264,
+                        156,
+                        264,
+                        157,
+                        274,
+                        150,
+                        274
+                      ]
+                    }
+                  ],
+                  "confidence": 0.986,
+                  "spans": [
+                    {
+                      "offset": 277,
+                      "length": 1
+                    }
+                  ]
+                },
+                "TotalPrice": {
+                  "type": "currency",
+                  "valueCurrency": {
+                    "amount": 1.0,
+                    "currencyCode": "EUR"
+                  },
+                  "content": "1,000",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        184,
+                        262,
+                        214,
+                        261,
+                        215,
+                        272,
+                        185,
+                        274
+                      ]
+                    }
+                  ],
+                  "confidence": 0.989,
+                  "spans": [
+                    {
+                      "offset": 279,
+                      "length": 5
+                    }
+                  ]
+                }
+              },
+              "content": "Flûte nature\n1\n1,000 DT",
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    6,
+                    271,
+                    235,
+                    259,
+                    236,
+                    271,
+                    7,
+                    283
+                  ]
+                }
+              ],
+              "confidence": 0.957,
+              "spans": [
+                {
+                  "offset": 264,
+                  "length": 23
+                }
+              ]
+            }
+          ]
+        },
+        "MerchantAddress": {
+          "type": "address",
+          "content": "Av de la république Imm\nEssãada, Marsa 2070",
+          "boundingRegions": [
+            {
+              "pageNumber": 1,
+              "polygon": [
+                9,
+                118,
+                186,
+                113,
+                187,
+                137,
+                10,
+                142
+              ]
+            }
+          ],
+          "confidence": 0.972,
+          "spans": [
+            {
+              "offset": 17,
+              "length": 43
+            }
+          ],
+          "valueAddress": {
+            "houseNumber": "2070",
+            "road": "Av de la république Imm\nEssãada, Marsa",
+            "streetAddress": "2070 Av de la république Imm\nEssãada, Marsa"
+          }
+        },
+        "MerchantName": {
+          "type": "string",
+          "valueString": "PAUL",
+          "content": "PAUL",
+          "boundingRegions": [
+            {
+              "pageNumber": 1,
+              "polygon": [
+                47,
+                40,
+                178,
+                38,
+                178,
+                73,
+                48,
+                75
+              ]
+            }
+          ],
+          "confidence": 0.955,
+          "spans": [
+            {
+              "offset": 0,
+              "length": 4
+            }
+          ]
+        },
+        "MerchantPhoneNumber": {
+          "type": "phoneNumber",
+          "content": "36 345 405",
+          "boundingRegions": [
+            {
+              "pageNumber": 1,
+              "polygon": [
+                153,
+                126,
+                213,
+                124,
+                213,
+                136,
+                153,
+                138
+              ]
+            }
+          ],
+          "confidence": 0.982,
+          "spans": [
+            {
+              "offset": 66,
+              "length": 10
+            }
+          ]
+        },
+        "ReceiptType": {
+          "type": "string",
+          "valueString": "Meal",
+          "confidence": 0.971
+        },
+        "Subtotal": {
+          "type": "currency",
+          "valueCurrency": {
+            "currencySymbol": "DT",
+            "amount": 24.5,
+            "currencyCode": "TND"
+          },
+          "content": "24,500 DT",
+          "boundingRegions": [
+            {
+              "pageNumber": 1,
+              "polygon": [
+                178,
+                281,
+                238,
+                278,
+                239,
+                291,
+                179,
+                294
+              ]
+            }
+          ],
+          "confidence": 0.981,
+          "spans": [
+            {
+              "offset": 301,
+              "length": 9
+            }
+          ]
+        },
+        "Total": {
+          "type": "currency",
+          "valueCurrency": {
+            "currencySymbol": "DT",
+            "amount": 24.5,
+            "currencyCode": "TND"
+          },
+          "content": "24,500 DT",
+          "boundingRegions": [
+            {
+              "pageNumber": 1,
+              "polygon": [
+                147,
+                309,
+                240,
+                305,
+                241,
+                324,
+                148,
+                328
+              ]
+            }
+          ],
+          "confidence": 0.982,
+          "spans": [
+            {
+              "offset": 339,
+              "length": 9
+            }
+          ]
+        },
+        "TransactionDate": {
+          "type": "date",
+          "valueDate": "2017-05-01",
+          "content": "01/05/2017",
+          "boundingRegions": [
+            {
+              "pageNumber": 1,
+              "polygon": [
+                14,
+                159,
+                78,
+                157,
+                78,
+                169,
+                14,
+                171
+              ]
+            }
+          ],
+          "confidence": 0.986,
+          "spans": [
+            {
+              "offset": 90,
+              "length": 10
+            }
+          ]
+        },
+        "TransactionTime": {
+          "type": "time",
+          "valueTime": "16:14:00",
+          "content": "16:14",
+          "boundingRegions": [
+            {
+              "pageNumber": 1,
+              "polygon": [
+                83,
+                157,
+                113,
+                156,
+                113,
+                167,
+                84,
+                169
+              ]
+            }
+          ],
+          "confidence": 0.987,
+          "spans": [
+            {
+              "offset": 101,
+              "length": 5
+            }
+          ]
+        }
+      },
+      "confidence": 0.97,
+      "spans": [
+        {
+          "offset": 0,
+          "length": 390
+        }
+      ]
+    }
+  ],
+  "contentFormat": "text"
+}

@@ -1,0 +1,1876 @@
+{
+  "apiVersion": "2024-11-30",
+  "modelId": "prebuilt-receipt",
+  "stringIndexType": "textElements",
+  "content": "BIENVENUE CHEZ\nAclresse: 7, rue du Lac Come, Imm, Nessima,\nTel:\ner Gt 100\nTICKET NUMERO : 8410\nNote:\nDT: 03/09/2026 19:01\nDE\n03/09/2026 19:01\nQTE\nDésignation\nPU\nTotal\n1\nExpresso\n7.000\n7.000\nDirect\n9.000\n9.000\nTOTAL:\n16.000 DT\nEspace\n16.000\n16.000\nRendu:\n0.000\nRecur\nMERCI POUR VOTRE VISITE",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "angle": -0.5087000131607056,
+      "width": 253,
+      "height": 388,
+      "unit": "pixel",
+      "words": [
+        {
+          "content": "BIENVENUE",
+          "polygon": [
+            71,
+            32,
+            121,
+            35,
+            121,
+            46,
+            71,
+            43
+          ],
+          "confidence": 0.895,
+          "span": {
+            "offset": 0,
+            "length": 9
+          }
+        },
+        {
+          "content": "CHEZ",
+          "polygon": [
+            124,
+            35,
+            148,
+            36,
+            147,
+            47,
+            124,
+            46
+          ],
+          "confidence": 0.913,
+          "span": {
+            "offset": 10,
+            "length": 4
+          }
+        },
+        {
+          "content": "Aclresse:",
+          "polygon": [
+            17,
+            102,
+            55,
+            103,
+            55,
+            113,
+            17,
+            112
+          ],
+          "confidence": 0.603,
+          "span": {
+            "offset": 15,
+            "length": 9
+          }
+        },
+        {
+          "content": "7,",
+          "polygon": [
+            58,
+            103,
+            64,
+            103,
+            64,
+            113,
+            58,
+            113
+          ],
+          "confidence": 0.815,
+          "span": {
+            "offset": 25,
+            "length": 2
+          }
+        },
+        {
+          "content": "rue",
+          "polygon": [
+            67,
+            103,
+            81,
+            103,
+            81,
+            113,
+            67,
+            113
+          ],
+          "confidence": 0.918,
+          "span": {
+            "offset": 28,
+            "length": 3
+          }
+        },
+        {
+          "content": "du",
+          "polygon": [
+            84,
+            103,
+            95,
+            103,
+            95,
+            113,
+            84,
+            113
+          ],
+          "confidence": 0.8,
+          "span": {
+            "offset": 32,
+            "length": 2
+          }
+        },
+        {
+          "content": "Lac",
+          "polygon": [
+            98,
+            103,
+            114,
+            103,
+            114,
+            113,
+            98,
+            113
+          ],
+          "confidence": 0.864,
+          "span": {
+            "offset": 35,
+            "length": 3
+          }
+        },
+        {
+          "content": "Come,",
+          "polygon": [
+            116,
+            103,
+            145,
+            103,
+            145,
+            113,
+            116,
+            113
+          ],
+          "confidence": 0.538,
+          "span": {
+            "offset": 39,
+            "length": 5
+          }
+        },
+        {
+          "content": "Imm,",
+          "polygon": [
+            148,
+            102,
+            169,
+            102,
+            169,
+            112,
+            148,
+            113
+          ],
+          "confidence": 0.606,
+          "span": {
+            "offset": 45,
+            "length": 4
+          }
+        },
+        {
+          "content": "Nessima,",
+          "polygon": [
+            172,
+            102,
+            211,
+            101,
+            211,
+            111,
+            172,
+            112
+          ],
+          "confidence": 0.822,
+          "span": {
+            "offset": 50,
+            "length": 8
+          }
+        },
+        {
+          "content": "Tel:",
+          "polygon": [
+            16,
+            115,
+            36,
+            115,
+            36,
+            124,
+            16,
+            124
+          ],
+          "confidence": 0.948,
+          "span": {
+            "offset": 59,
+            "length": 4
+          }
+        },
+        {
+          "content": "er",
+          "polygon": [
+            99,
+            115,
+            108,
+            115,
+            108,
+            124,
+            99,
+            124
+          ],
+          "confidence": 0.45,
+          "span": {
+            "offset": 64,
+            "length": 2
+          }
+        },
+        {
+          "content": "Gt",
+          "polygon": [
+            110,
+            115,
+            120,
+            115,
+            120,
+            124,
+            110,
+            124
+          ],
+          "confidence": 0.106,
+          "span": {
+            "offset": 67,
+            "length": 2
+          }
+        },
+        {
+          "content": "100",
+          "polygon": [
+            122,
+            115,
+            137,
+            115,
+            137,
+            124,
+            122,
+            124
+          ],
+          "confidence": 0.396,
+          "span": {
+            "offset": 70,
+            "length": 3
+          }
+        },
+        {
+          "content": "TICKET",
+          "polygon": [
+            55,
+            128,
+            97,
+            128,
+            97,
+            142,
+            55,
+            142
+          ],
+          "confidence": 0.952,
+          "span": {
+            "offset": 74,
+            "length": 6
+          }
+        },
+        {
+          "content": "NUMERO",
+          "polygon": [
+            100,
+            128,
+            146,
+            128,
+            147,
+            141,
+            100,
+            142
+          ],
+          "confidence": 0.773,
+          "span": {
+            "offset": 81,
+            "length": 6
+          }
+        },
+        {
+          "content": ":",
+          "polygon": [
+            149,
+            128,
+            154,
+            128,
+            155,
+            141,
+            149,
+            141
+          ],
+          "confidence": 0.989,
+          "span": {
+            "offset": 88,
+            "length": 1
+          }
+        },
+        {
+          "content": "8410",
+          "polygon": [
+            157,
+            128,
+            191,
+            128,
+            191,
+            141,
+            157,
+            141
+          ],
+          "confidence": 0.775,
+          "span": {
+            "offset": 90,
+            "length": 4
+          }
+        },
+        {
+          "content": "Note:",
+          "polygon": [
+            13,
+            148,
+            40,
+            148,
+            40,
+            157,
+            13,
+            157
+          ],
+          "confidence": 0.947,
+          "span": {
+            "offset": 95,
+            "length": 5
+          }
+        },
+        {
+          "content": "DT:",
+          "polygon": [
+            14,
+            161,
+            30,
+            161,
+            30,
+            170,
+            14,
+            170
+          ],
+          "confidence": 0.849,
+          "span": {
+            "offset": 101,
+            "length": 3
+          }
+        },
+        {
+          "content": "03/09/2026",
+          "polygon": [
+            37,
+            161,
+            87,
+            160,
+            87,
+            170,
+            37,
+            170
+          ],
+          "confidence": 0.963,
+          "span": {
+            "offset": 105,
+            "length": 10
+          }
+        },
+        {
+          "content": "19:01",
+          "polygon": [
+            89,
+            160,
+            110,
+            160,
+            110,
+            169,
+            89,
+            170
+          ],
+          "confidence": 0.979,
+          "span": {
+            "offset": 116,
+            "length": 5
+          }
+        },
+        {
+          "content": "DE",
+          "polygon": [
+            122,
+            160,
+            136,
+            159,
+            136,
+            168,
+            122,
+            168
+          ],
+          "confidence": 0.933,
+          "span": {
+            "offset": 122,
+            "length": 2
+          }
+        },
+        {
+          "content": "03/09/2026",
+          "polygon": [
+            144,
+            157,
+            191,
+            157,
+            191,
+            166,
+            144,
+            167
+          ],
+          "confidence": 0.795,
+          "span": {
+            "offset": 125,
+            "length": 10
+          }
+        },
+        {
+          "content": "19:01",
+          "polygon": [
+            194,
+            157,
+            215,
+            156,
+            215,
+            166,
+            195,
+            166
+          ],
+          "confidence": 0.707,
+          "span": {
+            "offset": 136,
+            "length": 5
+          }
+        },
+        {
+          "content": "QTE",
+          "polygon": [
+            7,
+            183,
+            22,
+            183,
+            22,
+            191,
+            7,
+            191
+          ],
+          "confidence": 0.99,
+          "span": {
+            "offset": 142,
+            "length": 3
+          }
+        },
+        {
+          "content": "Désignation",
+          "polygon": [
+            51,
+            183,
+            94,
+            183,
+            94,
+            190,
+            51,
+            191
+          ],
+          "confidence": 0.584,
+          "span": {
+            "offset": 146,
+            "length": 11
+          }
+        },
+        {
+          "content": "PU",
+          "polygon": [
+            143,
+            180,
+            152,
+            180,
+            152,
+            188,
+            143,
+            188
+          ],
+          "confidence": 0.9,
+          "span": {
+            "offset": 158,
+            "length": 2
+          }
+        },
+        {
+          "content": "Total",
+          "polygon": [
+            197,
+            180,
+            216,
+            180,
+            216,
+            187,
+            197,
+            187
+          ],
+          "confidence": 0.886,
+          "span": {
+            "offset": 161,
+            "length": 5
+          }
+        },
+        {
+          "content": "1",
+          "polygon": [
+            18,
+            201,
+            21,
+            201,
+            22,
+            209,
+            18,
+            210
+          ],
+          "confidence": 0.701,
+          "span": {
+            "offset": 167,
+            "length": 1
+          }
+        },
+        {
+          "content": "Expresso",
+          "polygon": [
+            37,
+            201,
+            76,
+            201,
+            76,
+            209,
+            37,
+            210
+          ],
+          "confidence": 0.73,
+          "span": {
+            "offset": 169,
+            "length": 8
+          }
+        },
+        {
+          "content": "7.000",
+          "polygon": [
+            139,
+            197,
+            163,
+            197,
+            163,
+            205,
+            139,
+            205
+          ],
+          "confidence": 0.675,
+          "span": {
+            "offset": 178,
+            "length": 5
+          }
+        },
+        {
+          "content": "7.000",
+          "polygon": [
+            202,
+            195,
+            226,
+            195,
+            226,
+            204,
+            203,
+            204
+          ],
+          "confidence": 0.643,
+          "span": {
+            "offset": 184,
+            "length": 5
+          }
+        },
+        {
+          "content": "Direct",
+          "polygon": [
+            37,
+            213,
+            65,
+            213,
+            65,
+            222,
+            37,
+            222
+          ],
+          "confidence": 0.6,
+          "span": {
+            "offset": 190,
+            "length": 6
+          }
+        },
+        {
+          "content": "9.000",
+          "polygon": [
+            141,
+            209,
+            163,
+            208,
+            163,
+            217,
+            141,
+            217
+          ],
+          "confidence": 0.847,
+          "span": {
+            "offset": 197,
+            "length": 5
+          }
+        },
+        {
+          "content": "9.000",
+          "polygon": [
+            203,
+            207,
+            227,
+            207,
+            227,
+            216,
+            203,
+            216
+          ],
+          "confidence": 0.946,
+          "span": {
+            "offset": 203,
+            "length": 5
+          }
+        },
+        {
+          "content": "TOTAL:",
+          "polygon": [
+            3,
+            249,
+            56,
+            247,
+            57,
+            262,
+            3,
+            264
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 209,
+            "length": 6
+          }
+        },
+        {
+          "content": "16.000",
+          "polygon": [
+            148,
+            243,
+            194,
+            242,
+            194,
+            257,
+            148,
+            257
+          ],
+          "confidence": 0.994,
+          "span": {
+            "offset": 216,
+            "length": 6
+          }
+        },
+        {
+          "content": "DT",
+          "polygon": [
+            205,
+            242,
+            224,
+            242,
+            224,
+            257,
+            205,
+            257
+          ],
+          "confidence": 0.994,
+          "span": {
+            "offset": 223,
+            "length": 2
+          }
+        },
+        {
+          "content": "Espace",
+          "polygon": [
+            21,
+            294,
+            56,
+            291,
+            57,
+            300,
+            21,
+            304
+          ],
+          "confidence": 0.562,
+          "span": {
+            "offset": 226,
+            "length": 6
+          }
+        },
+        {
+          "content": "16.000",
+          "polygon": [
+            205,
+            283,
+            236,
+            284,
+            236,
+            294,
+            205,
+            293
+          ],
+          "confidence": 0.884,
+          "span": {
+            "offset": 233,
+            "length": 6
+          }
+        },
+        {
+          "content": "16.000",
+          "polygon": [
+            68,
+            311,
+            97,
+            307,
+            98,
+            317,
+            69,
+            320
+          ],
+          "confidence": 0.977,
+          "span": {
+            "offset": 240,
+            "length": 6
+          }
+        },
+        {
+          "content": "Rendu:",
+          "polygon": [
+            121,
+            304,
+            154,
+            303,
+            154,
+            313,
+            121,
+            314
+          ],
+          "confidence": 0.891,
+          "span": {
+            "offset": 247,
+            "length": 6
+          }
+        },
+        {
+          "content": "0.000",
+          "polygon": [
+            212,
+            304,
+            239,
+            305,
+            238,
+            315,
+            211,
+            314
+          ],
+          "confidence": 0.986,
+          "span": {
+            "offset": 254,
+            "length": 5
+          }
+        },
+        {
+          "content": "Recur",
+          "polygon": [
+            6,
+            316,
+            37,
+            315,
+            37,
+            323,
+            6,
+            325
+          ],
+          "confidence": 0.633,
+          "span": {
+            "offset": 260,
+            "length": 5
+          }
+        },
+        {
+          "content": "MERCI",
+          "polygon": [
+            62,
+            376,
+            94,
+            372,
+            94,
+            383,
+            63,
+            387
+          ],
+          "confidence": 0.977,
+          "span": {
+            "offset": 266,
+            "length": 5
+          }
+        },
+        {
+          "content": "POUR",
+          "polygon": [
+            97,
+            372,
+            125,
+            370,
+            125,
+            381,
+            98,
+            383
+          ],
+          "confidence": 0.99,
+          "span": {
+            "offset": 272,
+            "length": 4
+          }
+        },
+        {
+          "content": "VOTRE",
+          "polygon": [
+            128,
+            369,
+            161,
+            367,
+            161,
+            379,
+            129,
+            381
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 277,
+            "length": 5
+          }
+        },
+        {
+          "content": "VISITE",
+          "polygon": [
+            164,
+            367,
+            193,
+            367,
+            193,
+            378,
+            164,
+            379
+          ],
+          "confidence": 0.992,
+          "span": {
+            "offset": 283,
+            "length": 6
+          }
+        }
+      ],
+      "lines": [
+        {
+          "content": "BIENVENUE CHEZ",
+          "polygon": [
+            71,
+            32,
+            148,
+            36,
+            147,
+            47,
+            71,
+            43
+          ],
+          "spans": [
+            {
+              "offset": 0,
+              "length": 14
+            }
+          ]
+        },
+        {
+          "content": "Aclresse: 7, rue du Lac Come, Imm, Nessima,",
+          "polygon": [
+            17,
+            102,
+            211,
+            101,
+            211,
+            112,
+            17,
+            113
+          ],
+          "spans": [
+            {
+              "offset": 15,
+              "length": 43
+            }
+          ]
+        },
+        {
+          "content": "Tel:",
+          "polygon": [
+            16,
+            115,
+            36,
+            115,
+            36,
+            124,
+            16,
+            124
+          ],
+          "spans": [
+            {
+              "offset": 59,
+              "length": 4
+            }
+          ]
+        },
+        {
+          "content": "er Gt 100",
+          "polygon": [
+            97,
+            115,
+            137,
+            115,
+            137,
+            124,
+            97,
+            124
+          ],
+          "spans": [
+            {
+              "offset": 64,
+              "length": 9
+            }
+          ]
+        },
+        {
+          "content": "TICKET NUMERO : 8410",
+          "polygon": [
+            55,
+            128,
+            191,
+            127,
+            191,
+            141,
+            55,
+            142
+          ],
+          "spans": [
+            {
+              "offset": 74,
+              "length": 20
+            }
+          ]
+        },
+        {
+          "content": "Note:",
+          "polygon": [
+            13,
+            148,
+            40,
+            148,
+            40,
+            157,
+            13,
+            157
+          ],
+          "spans": [
+            {
+              "offset": 95,
+              "length": 5
+            }
+          ]
+        },
+        {
+          "content": "DT: 03/09/2026 19:01",
+          "polygon": [
+            14,
+            161,
+            110,
+            160,
+            110,
+            170,
+            14,
+            171
+          ],
+          "spans": [
+            {
+              "offset": 101,
+              "length": 20
+            }
+          ]
+        },
+        {
+          "content": "DE",
+          "polygon": [
+            122,
+            160,
+            135,
+            159,
+            136,
+            167,
+            122,
+            168
+          ],
+          "spans": [
+            {
+              "offset": 122,
+              "length": 2
+            }
+          ]
+        },
+        {
+          "content": "03/09/2026 19:01",
+          "polygon": [
+            144,
+            157,
+            214,
+            156,
+            214,
+            166,
+            144,
+            167
+          ],
+          "spans": [
+            {
+              "offset": 125,
+              "length": 16
+            }
+          ]
+        },
+        {
+          "content": "QTE",
+          "polygon": [
+            7,
+            183,
+            22,
+            183,
+            22,
+            191,
+            7,
+            191
+          ],
+          "spans": [
+            {
+              "offset": 142,
+              "length": 3
+            }
+          ]
+        },
+        {
+          "content": "Désignation",
+          "polygon": [
+            50,
+            183,
+            94,
+            183,
+            94,
+            190,
+            51,
+            191
+          ],
+          "spans": [
+            {
+              "offset": 146,
+              "length": 11
+            }
+          ]
+        },
+        {
+          "content": "PU",
+          "polygon": [
+            143,
+            180,
+            152,
+            180,
+            152,
+            188,
+            143,
+            188
+          ],
+          "spans": [
+            {
+              "offset": 158,
+              "length": 2
+            }
+          ]
+        },
+        {
+          "content": "Total",
+          "polygon": [
+            197,
+            180,
+            215,
+            180,
+            215,
+            187,
+            197,
+            187
+          ],
+          "spans": [
+            {
+              "offset": 161,
+              "length": 5
+            }
+          ]
+        },
+        {
+          "content": "1",
+          "polygon": [
+            18,
+            201,
+            21,
+            201,
+            21,
+            209,
+            18,
+            209
+          ],
+          "spans": [
+            {
+              "offset": 167,
+              "length": 1
+            }
+          ]
+        },
+        {
+          "content": "Expresso",
+          "polygon": [
+            37,
+            201,
+            75,
+            201,
+            76,
+            209,
+            37,
+            210
+          ],
+          "spans": [
+            {
+              "offset": 169,
+              "length": 8
+            }
+          ]
+        },
+        {
+          "content": "7.000",
+          "polygon": [
+            139,
+            197,
+            162,
+            197,
+            162,
+            205,
+            139,
+            205
+          ],
+          "spans": [
+            {
+              "offset": 178,
+              "length": 5
+            }
+          ]
+        },
+        {
+          "content": "7.000",
+          "polygon": [
+            202,
+            195,
+            225,
+            195,
+            225,
+            203,
+            203,
+            204
+          ],
+          "spans": [
+            {
+              "offset": 184,
+              "length": 5
+            }
+          ]
+        },
+        {
+          "content": "Direct",
+          "polygon": [
+            37,
+            213,
+            64,
+            212,
+            65,
+            221,
+            37,
+            222
+          ],
+          "spans": [
+            {
+              "offset": 190,
+              "length": 6
+            }
+          ]
+        },
+        {
+          "content": "9.000",
+          "polygon": [
+            141,
+            209,
+            163,
+            208,
+            163,
+            217,
+            141,
+            217
+          ],
+          "spans": [
+            {
+              "offset": 197,
+              "length": 5
+            }
+          ]
+        },
+        {
+          "content": "9.000",
+          "polygon": [
+            203,
+            207,
+            227,
+            207,
+            227,
+            216,
+            203,
+            216
+          ],
+          "spans": [
+            {
+              "offset": 203,
+              "length": 5
+            }
+          ]
+        },
+        {
+          "content": "TOTAL:",
+          "polygon": [
+            2,
+            249,
+            56,
+            247,
+            57,
+            262,
+            3,
+            264
+          ],
+          "spans": [
+            {
+              "offset": 209,
+              "length": 6
+            }
+          ]
+        },
+        {
+          "content": "16.000 DT",
+          "polygon": [
+            147,
+            242,
+            223,
+            242,
+            224,
+            257,
+            148,
+            258
+          ],
+          "spans": [
+            {
+              "offset": 216,
+              "length": 9
+            }
+          ]
+        },
+        {
+          "content": "Espace",
+          "polygon": [
+            20,
+            294,
+            56,
+            291,
+            56,
+            300,
+            21,
+            303
+          ],
+          "spans": [
+            {
+              "offset": 226,
+              "length": 6
+            }
+          ]
+        },
+        {
+          "content": "16.000",
+          "polygon": [
+            205,
+            283,
+            235,
+            284,
+            235,
+            294,
+            205,
+            293
+          ],
+          "spans": [
+            {
+              "offset": 233,
+              "length": 6
+            }
+          ]
+        },
+        {
+          "content": "16.000",
+          "polygon": [
+            68,
+            310,
+            97,
+            307,
+            98,
+            317,
+            69,
+            320
+          ],
+          "spans": [
+            {
+              "offset": 240,
+              "length": 6
+            }
+          ]
+        },
+        {
+          "content": "Rendu:",
+          "polygon": [
+            121,
+            304,
+            154,
+            303,
+            154,
+            313,
+            121,
+            313
+          ],
+          "spans": [
+            {
+              "offset": 247,
+              "length": 6
+            }
+          ]
+        },
+        {
+          "content": "0.000",
+          "polygon": [
+            212,
+            304,
+            239,
+            305,
+            238,
+            315,
+            211,
+            314
+          ],
+          "spans": [
+            {
+              "offset": 254,
+              "length": 5
+            }
+          ]
+        },
+        {
+          "content": "Recur",
+          "polygon": [
+            6,
+            316,
+            37,
+            315,
+            37,
+            323,
+            6,
+            324
+          ],
+          "spans": [
+            {
+              "offset": 260,
+              "length": 5
+            }
+          ]
+        },
+        {
+          "content": "MERCI POUR VOTRE VISITE",
+          "polygon": [
+            62,
+            374,
+            192,
+            366,
+            193,
+            378,
+            63,
+            387
+          ],
+          "spans": [
+            {
+              "offset": 266,
+              "length": 23
+            }
+          ]
+        }
+      ],
+      "spans": [
+        {
+          "offset": 0,
+          "length": 289
+        }
+      ]
+    }
+  ],
+  "styles": [],
+  "documents": [
+    {
+      "docType": "receipt.retailMeal",
+      "boundingRegions": [
+        {
+          "pageNumber": 1,
+          "polygon": [
+            0,
+            0,
+            253,
+            0,
+            253,
+            388,
+            0,
+            388
+          ]
+        }
+      ],
+      "fields": {
+        "CountryRegion": {
+          "type": "countryRegion",
+          "valueCountryRegion": "FRA",
+          "confidence": 0.995
+        },
+        "Items": {
+          "type": "array",
+          "valueArray": [
+            {
+              "type": "object",
+              "valueObject": {
+                "Description": {
+                  "type": "string",
+                  "valueString": "Expresso",
+                  "content": "Expresso",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        37,
+                        201,
+                        76,
+                        201,
+                        76,
+                        209,
+                        37,
+                        210
+                      ]
+                    }
+                  ],
+                  "confidence": 0.995,
+                  "spans": [
+                    {
+                      "offset": 169,
+                      "length": 8
+                    }
+                  ]
+                },
+                "Price": {
+                  "type": "currency",
+                  "valueCurrency": {
+                    "amount": 7.0,
+                    "currencyCode": "EUR"
+                  },
+                  "content": "7.000",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        139,
+                        197,
+                        163,
+                        197,
+                        163,
+                        205,
+                        139,
+                        205
+                      ]
+                    }
+                  ],
+                  "confidence": 0.995,
+                  "spans": [
+                    {
+                      "offset": 178,
+                      "length": 5
+                    }
+                  ]
+                },
+                "Quantity": {
+                  "type": "number",
+                  "valueNumber": 1,
+                  "content": "1",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        18,
+                        201,
+                        21,
+                        201,
+                        22,
+                        209,
+                        18,
+                        210
+                      ]
+                    }
+                  ],
+                  "confidence": 0.995,
+                  "spans": [
+                    {
+                      "offset": 167,
+                      "length": 1
+                    }
+                  ]
+                },
+                "TotalPrice": {
+                  "type": "currency",
+                  "valueCurrency": {
+                    "amount": 7000.0,
+                    "currencyCode": "EUR"
+                  },
+                  "content": "7.000",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        202,
+                        195,
+                        226,
+                        195,
+                        226,
+                        204,
+                        203,
+                        204
+                      ]
+                    }
+                  ],
+                  "confidence": 0.995,
+                  "spans": [
+                    {
+                      "offset": 184,
+                      "length": 5
+                    }
+                  ]
+                }
+              },
+              "content": "1\nExpresso\n7.000\n7.000",
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    18,
+                    195,
+                    226,
+                    195,
+                    226,
+                    210,
+                    18,
+                    210
+                  ]
+                }
+              ],
+              "confidence": 0.99,
+              "spans": [
+                {
+                  "offset": 167,
+                  "length": 22
+                }
+              ]
+            },
+            {
+              "type": "object",
+              "valueObject": {
+                "Description": {
+                  "type": "string",
+                  "valueString": "Direct",
+                  "content": "Direct",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        37,
+                        213,
+                        65,
+                        213,
+                        65,
+                        222,
+                        37,
+                        222
+                      ]
+                    }
+                  ],
+                  "confidence": 0.993,
+                  "spans": [
+                    {
+                      "offset": 190,
+                      "length": 6
+                    }
+                  ]
+                },
+                "Price": {
+                  "type": "currency",
+                  "valueCurrency": {
+                    "amount": 9.0,
+                    "currencyCode": "EUR"
+                  },
+                  "content": "9.000",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        141,
+                        209,
+                        163,
+                        208,
+                        163,
+                        217,
+                        141,
+                        217
+                      ]
+                    }
+                  ],
+                  "confidence": 0.995,
+                  "spans": [
+                    {
+                      "offset": 197,
+                      "length": 5
+                    }
+                  ]
+                },
+                "TotalPrice": {
+                  "type": "currency",
+                  "valueCurrency": {
+                    "amount": 9000.0,
+                    "currencyCode": "EUR"
+                  },
+                  "content": "9.000",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        203,
+                        207,
+                        227,
+                        207,
+                        227,
+                        216,
+                        203,
+                        216
+                      ]
+                    }
+                  ],
+                  "confidence": 0.995,
+                  "spans": [
+                    {
+                      "offset": 203,
+                      "length": 5
+                    }
+                  ]
+                }
+              },
+              "content": "Direct\n9.000\n9.000",
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    37,
+                    207,
+                    227,
+                    207,
+                    227,
+                    222,
+                    37,
+                    222
+                  ]
+                }
+              ],
+              "confidence": 0.987,
+              "spans": [
+                {
+                  "offset": 190,
+                  "length": 18
+                }
+              ]
+            }
+          ]
+        },
+        "MerchantAddress": {
+          "type": "address",
+          "content": "7, rue du Lac Come, Imm, Nessima,",
+          "boundingRegions": [
+            {
+              "pageNumber": 1,
+              "polygon": [
+                58,
+                101,
+                211,
+                101,
+                211,
+                113,
+                58,
+                113
+              ]
+            }
+          ],
+          "confidence": 0.987,
+          "spans": [
+            {
+              "offset": 25,
+              "length": 33
+            }
+          ],
+          "valueAddress": {
+            "houseNumber": "7",
+            "road": "rue du Lac Come, Imm, Nessima",
+            "streetAddress": "7 rue du Lac Come, Imm, Nessima"
+          }
+        },
+        "ReceiptType": {
+          "type": "string",
+          "valueString": "Meal",
+          "confidence": 0.99
+        },
+        "Total": {
+          "type": "currency",
+          "valueCurrency": {
+            "amount": 16000.0,
+            "currencyCode": "EUR"
+          },
+          "content": "16.000",
+          "boundingRegions": [
+            {
+              "pageNumber": 1,
+              "polygon": [
+                148,
+                243,
+                194,
+                242,
+                194,
+                257,
+                148,
+                257
+              ]
+            }
+          ],
+          "confidence": 0.993,
+          "spans": [
+            {
+              "offset": 216,
+              "length": 6
+            }
+          ]
+        },
+        "TransactionDate": {
+          "type": "date",
+          "valueDate": "2026-09-03",
+          "content": "03/09/2026",
+          "boundingRegions": [
+            {
+              "pageNumber": 1,
+              "polygon": [
+                37,
+                161,
+                87,
+                160,
+                87,
+                170,
+                37,
+                170
+              ]
+            }
+          ],
+          "confidence": 0.995,
+          "spans": [
+            {
+              "offset": 105,
+              "length": 10
+            }
+          ]
+        },
+        "TransactionTime": {
+          "type": "time",
+          "valueTime": "19:01:00",
+          "content": "19:01",
+          "boundingRegions": [
+            {
+              "pageNumber": 1,
+              "polygon": [
+                89,
+                160,
+                110,
+                160,
+                110,
+                169,
+                89,
+                170
+              ]
+            }
+          ],
+          "confidence": 0.995,
+          "spans": [
+            {
+              "offset": 116,
+              "length": 5
+            }
+          ]
+        }
+      },
+      "confidence": 0.989,
+      "spans": [
+        {
+          "offset": 0,
+          "length": 289
+        }
+      ]
+    }
+  ],
+  "contentFormat": "text"
+}
