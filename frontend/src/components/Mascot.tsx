@@ -46,8 +46,14 @@ export function Mascot({ onExpenseSaved }: Props) {
         const text = last[0].transcript.toLowerCase().trim()
 
         if (stateRef.current === 'idle' && text.includes('nova')) {
-          setState('listening')
-          setTranscript('')
+          setState('speaking')
+          setReply('Hi! I\'m Nova, your assistant. I\'m listening — how can I help you?')
+          playGreeting(() => {
+            setReply('')
+            setState('listening')
+            setTranscript('')
+            try { recognitionRef.current?.start() } catch (_) {}
+          })
           return
         }
 
@@ -154,6 +160,20 @@ export function Mascot({ onExpenseSaved }: Props) {
   function handleCancel() {
     setState('idle')
     setTranscript('')
+  }
+
+  function playGreeting(onEnd: () => void) {
+    const msg = 'Hi! I\'m Nova, your assistant. I\'m listening — how can I help you?'
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel()
+      const utter = new SpeechSynthesisUtterance(msg)
+      utter.lang = 'en-US'
+      utter.rate = 1
+      utter.onend = onEnd
+      window.speechSynthesis.speak(utter)
+    } else {
+      setTimeout(onEnd, 2000)
+    }
   }
 
   // ── Ring color ────────────────────────────────────────────────
