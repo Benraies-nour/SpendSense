@@ -81,8 +81,8 @@ spendsense/
 - Python 3.13
 - Node.js 20 or later
 - PostgreSQL 18 running locally
-- A Groq API key (free, from [console.groq.com](https://console.groq.com))
-- An Azure Document Intelligence resource on the free tier F0
+- A Groq API key
+- An Azure Document Intelligence resource 
 
 ### Backend
 
