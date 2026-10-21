@@ -77,7 +77,7 @@ export function Auth({ mode, theme, onToggleTheme }: AuthProps) {
       await signUp(values.name, values.email, values.password)
       setWelcomeName(values.name)
     } catch (err: any) {
-      setSignInError(err.message ?? 'Sign up failed.')
+      setSignInError(err.message || 'Sign up failed. Check your connection and try again.')
     } finally {
       setSubmitting(false)
     }
@@ -178,7 +178,7 @@ export function Auth({ mode, theme, onToggleTheme }: AuthProps) {
                 {...fieldProps('confirm')}
               />
               <button type="submit" className="btn btn-primary btn-block" disabled={submitting}>
-                {submitting ? 'Creating account…' : 'Create account'}
+                {submitting ? 'Creating account… (may take ~30 s)' : 'Create account'}
               </button>
               <p className="auth-switch muted">
                 Already have an account? <a href={routeHref.login}>Log in</a>
