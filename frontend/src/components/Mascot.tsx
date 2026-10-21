@@ -39,7 +39,6 @@ export function Mascot({ onExpenseSaved }: Props) {
       recognitionRef.current     = recognition
       recognition.continuous     = true
       recognition.interimResults = true
-      recognition.lang           = 'fr-FR'
 
       recognition.onresult = (event: any) => {
         const last = event.results[event.results.length - 1]

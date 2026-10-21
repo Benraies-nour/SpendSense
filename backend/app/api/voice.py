@@ -16,7 +16,7 @@ from app.models.voice_message import VoiceMessage
 from app.services.tools import TOOLS, execute_tool
 from app.services.tts import speak
 
-MEMORY_WINDOW = 20  # number of past messages (user + assistant) kept as context
+MEMORY_WINDOW = 5  # number of past messages (user + assistant) kept as context
 
 router = APIRouter(prefix="/voice", tags=["voice"])
 
@@ -114,6 +114,19 @@ class VoiceChatResponse(BaseModel):
     reply_text: str
     audio_b64:  str
     draft:      Draft | None = None
+
+
+@router.delete("/history", status_code=204)
+def clear_voice_history(
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    messages = session.exec(
+        select(VoiceMessage).where(VoiceMessage.user_id == current_user.id)
+    ).all()
+    for m in messages:
+        session.delete(m)
+    session.commit()
 
 
 @router.post("/chat", response_model=VoiceChatResponse)

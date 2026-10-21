@@ -349,3 +349,7 @@ export async function confirmReceipt(payload: ConfirmReceiptPayload): Promise<Re
   }
   return res.json()
 }
+
+export async function clearVoiceHistory(): Promise<void> {
+  await fetch(`${API_BASE}/voice/history`, { method: 'DELETE', headers: authHeaders() })
+}
