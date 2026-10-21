@@ -1,5 +1,7 @@
 # SpendSense
 
+**Live app:** [spend-sense-teal.vercel.app](https://spend-sense-teal.vercel.app) &nbsp;·&nbsp; **API:** [spendsense-yak7.onrender.com](https://spendsense-yak7.onrender.com/docs)
+
 ## Project Overview
 
 SpendSense is a personal budget management web application. It helps users record their daily expenses, allocate monthly budgets per category, and monitor their financial activity through a dedicated dashboard.
