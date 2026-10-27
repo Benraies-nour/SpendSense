@@ -161,7 +161,7 @@ Review the generated file in `alembic/versions/` before applying it.
 
 Nova is a voice-first financial assistant built on a ReAct agentic loop:
 
-1. **Wake word** — continuous 3-second audio chunks are transcribed by Whisper; Nova activates when it hears *"Nova"*.
+1. **Wake word** — Nova activates when it hears *"Nova"*.
 2. **Listen** — Nova records the user's request and auto-stops after 1.5 seconds of silence.
 3. **Reason & Act** — the LLM decides whether to call a tool (draft expense, draft income, draft category, get summary, get budget status, get recent transactions) or reply directly.
 4. **Confirm** — drafts are staged as a `PendingTransaction` and shown to the user. Nova also listens for a voice confirmation so the user can say *"yes"*, *"no"*, or amend the draft by voice.
