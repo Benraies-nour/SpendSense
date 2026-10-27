@@ -95,7 +95,7 @@ export function CategoriesTab() {
   }
 
   if (status === 'loading') return (
-    <div style={{ color: 'var(--color-text-muted)', fontSize: 14 }}>Loading categories…</div>
+    <div style={{ color: 'var(--color-text-muted)', fontSize: 18 }}>Loading categories…</div>
   )
 
   return (
@@ -103,11 +103,11 @@ export function CategoriesTab() {
 
       {/* Table */}
       <div style={{ border: '1px solid var(--color-border)', borderRadius: 8, overflow: 'hidden' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 18 }}>
           <thead>
             <tr style={{ background: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}>
               {['Name', 'Monthly Budget (TND)', ''].map(h => (
-                <th key={h} style={{ padding: '10px 16px', textAlign: 'left', fontWeight: 500, fontSize: 12, color: 'var(--color-text-muted)' }}>
+                <th key={h} style={{ padding: '10px 16px', textAlign: 'left', fontWeight: 700, fontSize: 15, color: 'var(--color-text)', textTransform: 'uppercase', letterSpacing: '0.05em', fontStyle: 'normal' }}>
                   {h}
                 </th>
               ))}
@@ -169,10 +169,10 @@ export function CategoriesTab() {
 
       {/* Add category */}
       <div style={{ border: '1px solid var(--color-border)', borderRadius: 8, padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <p style={{ margin: 0, fontWeight: 500, fontSize: 14 }}>Add category</p>
+        <p style={{ margin: 0, fontWeight: 500, fontSize: 18 }}>Add category</p>
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'flex-end' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-            <label style={{ fontSize: 12, color: 'var(--color-text-muted)' }}>Name</label>
+            <label style={{ fontSize: 15, color: 'var(--color-text-muted)' }}>Name</label>
             <input
               value={addName}
               onChange={e => setAddName(e.target.value)}
@@ -181,7 +181,7 @@ export function CategoriesTab() {
             />
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-            <label style={{ fontSize: 12, color: 'var(--color-text-muted)' }}>Budget (TND)</label>
+            <label style={{ fontSize: 15, color: 'var(--color-text-muted)' }}>Budget (TND)</label>
             <input
               type="number"
               min={0}
@@ -196,7 +196,7 @@ export function CategoriesTab() {
             {adding ? 'Adding…' : '+ Add'}
           </button>
         </div>
-        {addError && <p style={{ margin: 0, fontSize: 12, color: '#f43f5e' }}>{addError}</p>}
+        {addError && <p style={{ margin: 0, fontSize: 15, color: '#f43f5e' }}>{addError}</p>}
       </div>
     </div>
   )
@@ -205,7 +205,7 @@ export function CategoriesTab() {
 const inlineInput: React.CSSProperties = {
   background: 'transparent', border: 'none',
   borderBottom: '1px solid transparent',
-  color: 'var(--color-text)', fontSize: 14,
+  color: 'var(--color-text)', fontSize: 18,
   width: '100%', outline: 'none', padding: '2px 0', cursor: 'text',
 }
 
@@ -213,7 +213,7 @@ const amountInput: React.CSSProperties = {
   width: 120, padding: '4px 8px', borderRadius: 6,
   border: '1px solid var(--color-border)',
   background: 'var(--color-surface)',
-  color: 'var(--color-text)', fontSize: 13,
+  color: 'var(--color-text)', fontSize: 18,
   textAlign: 'right', outline: 'none',
 }
 
@@ -221,14 +221,14 @@ const fieldInput: React.CSSProperties = {
   padding: '6px 10px', borderRadius: 6,
   border: '1px solid var(--color-border)',
   background: 'var(--color-surface)',
-  color: 'var(--color-text)', fontSize: 13,
+  color: 'var(--color-text)', fontSize: 18,
   width: 180, outline: 'none',
 }
 
 const saveBtn: React.CSSProperties = {
   padding: '4px 12px', borderRadius: 6,
   border: 'none', background: '#3b82f6',
-  color: '#fff', fontSize: 12, fontWeight: 500, cursor: 'pointer',
+  color: '#fff', fontSize: 15, fontWeight: 500, cursor: 'pointer',
 }
 
 const deleteBtn: React.CSSProperties = {

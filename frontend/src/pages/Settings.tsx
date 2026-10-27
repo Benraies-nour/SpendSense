@@ -54,15 +54,15 @@ export function Settings() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 32, maxWidth: 560 }}>
 
       <div>
-        <h1 className="text-xl font-bold tracking-tight">Settings</h1>
-        <p className="text-sm text-muted-foreground mt-1">Manage your account preferences.</p>
+        <h1 className="text-xl font-normal text-foreground">Settings</h1>
+        <p className="text-base text-muted-foreground mt-1">Manage your account preferences.</p>
       </div>
 
       {/* Profile card */}
       <section style={{ border: '1px solid var(--color-border)', borderRadius: 10, overflow: 'hidden' }}>
 
         <div style={{ padding: '16px 20px', borderBottom: '1px solid var(--color-border)', background: 'var(--color-surface)' }}>
-          <h2 style={{ fontSize: 15, fontWeight: 600, margin: 0 }}>Profile</h2>
+          <h2 style={{ fontSize: 20, fontWeight: 600, margin: 0 }}>Profile</h2>
           <p style={{ fontSize: 12, color: 'var(--color-text-muted)', margin: '2px 0 0' }}>Your name and email address.</p>
         </div>
 

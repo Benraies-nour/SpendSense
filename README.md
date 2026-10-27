@@ -4,21 +4,18 @@
 
 ## Project Overview
 
-SpendSense is a personal budget management web application. It helps users record their daily expenses, allocate monthly budgets per category, and monitor their financial activity through a dedicated dashboard.
+SpendSense is a personal budget management web application. It helps users record their daily expenses and income, allocate monthly budgets per category, and monitor their financial activity through a dedicated dashboard.
 
-Users can log an expense in three different ways: scanning a paper receipt, speaking to a built-in voice assistant, or filling in a short manual form. Every entry flows through the same pipeline — text extraction, categorization, and persistence — so the budget stays consistent regardless of the input method.
+Users can log an expense in three ways: scanning a paper receipt, speaking to a built-in voice assistant, or filling in a short manual form. Every entry flows through the same pipeline — text extraction, categorization, and persistence — so the budget stays consistent regardless of the input method.
 
-All monetary values are expressed in Tunisian dinars (TND) with three decimal places (millimes).
 
 ## Features
 
-- **Receipt scanning.** Upload a photo of a receipt; the OCR service detects the items, each item is categorized, and the user reviews the draft before saving. A single receipt produces one expense per category, so category budgets stay accurate.
-- **Voice expense entry.** A voice assistant named Nova listens for a wake word, transcribes the user's speech, prepares a draft expense, income, or category, and asks for confirmation before saving.
-- **Category-based budgets.** Each category holds a fixed monthly budget in TND; the dashboard displays the amount spent and remaining per category, and raises a warning when a budget is exceeded.
-- **Expense and income tracking.** Expenses and incomes (one-off or recurring) can be created, edited, filtered by date range, category, or source, and deleted.
-- **Budget queries.** Natural-language questions such as "how much have I spent on groceries this month?" are answered by the voice assistant using live data from the database.
-- **Spending dashboard.** A visual summary of the user's financial activity, with filters to focus on a specific period or category.
-- **Multilingual input.** The user interface is in English, but voice and text inputs accept French, Arabic, and Tunisian Darija, including mixed-language messages.
+- **Receipt scanning.** Upload a photo of a receipt; the OCR service detects the items, each item is categorized, and the user reviews the draft before saving. A single receipt produces one expense per category.
+- **Voice assistant (Nova).** Say *"Nova"* to wake the assistant. Nova listens for your request, calls the appropriate tool (log expense, log income, create category, query spending), prepares a draft, and asks for confirmation before saving anything. The full conversation is stored per session so Nova can handle follow-up and amendments.
+- **Expense and income tracking.** Expenses and incomes (one-off or recurring) can be created, edited, filtered by date range or category, and deleted.
+- **Spending dashboard.** A visual summary of financial activity with filters for period and category.
+
 
 ## Technologies Used
 
@@ -26,13 +23,13 @@ All monetary values are expressed in Tunisian dinars (TND) with three decimal pl
 |---|---|
 | Backend | Python 3.13, FastAPI, SQLModel, Pydantic |
 | Frontend | React, TypeScript, Vite, Tailwind CSS, Recharts |
-| Database | PostgreSQL 18 |
-| OCR | Azure Document Intelligence — `prebuilt-receipt` model (free tier F0) |
-| LLM | Groq — `openai/gpt-oss-120b` |
-| Speech-to-text | Groq — `whisper-large-v3` |
-| Text-to-speech | `edge-tts` — voices `fr-FR-DeniseNeural` and `ar-TN-ReemNeural` |
+| Database | PostgreSQL |
+| OCR | Azure Document Intelligence — `prebuilt-receipt` model |
+| LLM (Nova) | Groq — `openai/gpt-oss-20b` |
+| Speech-to-text | Groq — `whisper-large-v3-turbo` |
+| Text-to-speech | `edge-tts` — `en-US-JennyNeural` |
 | Authentication | JWT tokens, PBKDF2-SHA256 password hashing |
-| Testing | pytest with Azure and Groq clients mocked |
+
 
 ## Project Structure
 
@@ -43,18 +40,15 @@ spendsense/
 │   │   ├── main.py              # FastAPI application entry point
 │   │   ├── api/                 # HTTP routes: auth, users, expenses, incomes,
 │   │   │                        #   categories, receipts, budget, stores, voice
-│   │   ├── services/            # Business logic: ocr, extraction, budget, tts, tools
-│   │   ├── schemas/             # Pydantic models for API inputs and outputs
+│   │   ├── services/            # Business logic: ocr, extraction, tts,
+│   │   │                        #   voice_agent, tools, tool_executors, budget
+│   │   ├── schemas/             # Pydantic models for API inputs/outputs
 │   │   ├── models/              # SQLModel database models
-│   │   └── core/                # Configuration, database, security, dependencies
+│   │   └── core/                # Config, database, security, dependencies
 │   ├── alembic/
 │   │   ├── versions/            # Database migration scripts
-│   │   └── env.py               # Migration environment (reads DATABASE_URL from .env)
+│   │   └── env.py               # Migration environment
 │   ├── alembic.ini
-│   ├── tests/
-│   │   ├── test_ocr.py          # OCR service tests (Azure mocked)
-│   │   ├── test_extraction.py   # LLM extraction tests (Groq mocked)
-│   │   └── fixtures/receipts/   # Saved Azure JSON responses used by tests
 │   ├── requirements.txt
 │   └── .env.example
 ├── frontend/
@@ -71,8 +65,6 @@ spendsense/
 │   │   └── types.ts             # Shared TypeScript types
 │   ├── package.json
 │   └── vite.config.ts
-├── docs/
-│   └── receipt-scanning-plan.md
 └── README.md
 ```
 
@@ -82,9 +74,9 @@ spendsense/
 
 - Python 3.13
 - Node.js 20 or later
-- PostgreSQL 18 running locally
+- PostgreSQL running locally
 - A Groq API key
-- An Azure Document Intelligence resource 
+- An Azure Document Intelligence resource
 
 ### Backend
 
@@ -100,21 +92,17 @@ Create a `.env` file in `backend/` by copying `.env.example`, then fill in the v
 
 ```env
 DATABASE_URL=postgresql://postgres:<password>@localhost:5432/spendsense
-SECRET_KEY=<python -c "import secrets; print(secrets.token_hex(32))">
+SECRET_KEY=<run: python -c "import secrets; print(secrets.token_hex(32))">
 GROQ_API_KEY=<key from console.groq.com>
 AZURE_DI_ENDPOINT=https://<your-resource>.cognitiveservices.azure.com/
 AZURE_DI_KEY=<KEY 1 from the Azure portal "Keys and Endpoint" page>
+NOVA_MODEL=openai/gpt-oss-20b
 ```
 
-Create the PostgreSQL database once:
+Create the database and apply migrations:
 
 ```bash
 createdb spendsense
-```
-
-Apply the database migrations:
-
-```bash
 alembic upgrade head
 ```
 
@@ -124,32 +112,27 @@ Start the API:
 uvicorn app.main:app --reload
 ```
 
-The API is served on `http://localhost:8000`. Interactive OpenAPI docs are available at `http://localhost:8000/docs`.
+The API is available at `http://localhost:8000`. Interactive docs are at `http://localhost:8000/docs`.
 
 ### Frontend
 
 ```bash
 cd frontend
 npm install
+npm run dev
 ```
 
-Create a `.env` file in `frontend/` if the backend is not on the default URL:
+The app is served on `http://localhost:5173`.
+
+Set `VITE_API_URL` in `frontend/.env` if the backend is not on the default port:
 
 ```env
 VITE_API_URL=http://localhost:8000
 ```
 
-Start the development server:
-
-```bash
-npm run dev
-```
-
-The web application is served on `http://localhost:5173`.
-
 ### Database migrations
 
-Schema changes are managed with Alembic, not with automatic table creation. After modifying a model in `app/models/`, generate and apply a migration:
+Schema changes are managed with Alembic. After modifying a model in `app/models/`:
 
 ```bash
 cd backend
@@ -157,28 +140,31 @@ alembic revision --autogenerate -m "describe the change"
 alembic upgrade head
 ```
 
-Review the generated file in `alembic/versions/` before applying it — autogenerate is a starting point, not a guarantee.
-
-### Running the tests
-
-```bash
-cd backend
-pytest tests/
-```
-
-The tests mock the Azure and Groq clients, so no network calls are made and no quota is consumed.
+Review the generated file in `alembic/versions/` before applying it.
 
 ## Usage
 
-1. **Create an account.** Open `http://localhost:5173`, click *Get started* on the landing page, and fill in the sign-up form. Logging in afterwards stores a JWT in the browser.
+1. **Create an account.** Open `http://localhost:5173`, click *Get started*, and fill in the sign-up form.
 
-2. **Set up categories and budgets.** Go to *Manage → Categories* to add categories (for example *Food*, *Transport*, *Bills*) and set a monthly budget in TND for each one.
+2. **Set up categories and budgets.** Go to *Manage → Categories* to add categories (e.g. *Food*, *Transport*, *Bills*) and set a monthly budget for each.
 
-3. **Record an income.** Go to *Manage → Incomes* to add a one-off income or a recurring one such as a monthly salary.
+3. **Record income.** Go to *Manage → Incomes* to add a one-off or recurring income.
 
 4. **Add an expense.** From *Manage → Expenses*, choose one of three input methods:
-   - **Scan receipt** — select or capture a photo (JPEG, PNG, BMP, TIFF, HEIF, or PDF; 4 MB maximum). The dialog displays a draft with the detected items, their quantities, and prices. Assign a category to each item, correct any value if needed, then confirm. One expense per category is created in a single transaction.
-   - **Manual entry** — fill in the description, amount, category, date, and optional recurrence day.
-   - **Voice** — say *"Nova"* to activate the assistant, then describe the expense in French, Arabic, or Darija (for example *"j'ai payé 12.500 dinars de pain"*). Confirm the draft Nova proposes and the expense is saved.
+   - **Scan receipt** — upload a photo (JPEG, PNG, PDF; 4 MB max). Review the detected items, assign categories, and confirm.
+   - **Manual entry** — fill in description, amount, category, and date.
+   - **Voice (Nova)** — say *"Nova"* to activate the assistant. Describe what you want in English (e.g. *"I spent 12 dinars on groceries"*). Nova drafts the entry and asks for confirmation before saving.
 
-5. **Review the dashboard.** Open the *Overview* page to review your financial activity. Use the filters at the top to pick the period and categories you want to focus on.
+5. **Review the dashboard.** Open *Overview* to see your financial activity. Use the filters to focus on a specific period or category.
+
+## Nova — Voice Assistant
+
+Nova is a voice-first financial assistant built on a ReAct agentic loop:
+
+1. **Wake word** — continuous 3-second audio chunks are transcribed by Whisper; Nova activates when it hears *"Nova"*.
+2. **Listen** — Nova records the user's request and auto-stops after 1.5 seconds of silence.
+3. **Reason & Act** — the LLM decides whether to call a tool (draft expense, draft income, draft category, get summary, get budget status, get recent transactions) or reply directly.
+4. **Confirm** — drafts are staged as a `PendingTransaction` and shown to the user. Nova also listens for a voice confirmation so the user can say *"yes"*, *"no"*, or amend the draft by voice.
+5. **Persist** — on confirmation the entry is written to the database; on rejection the draft is discarded and the conversation history is cleaned up.
+
+Conversation history is stored in the `voicemessage` table (last 10 messages) and cleared automatically after 15 minutes of inactivity.

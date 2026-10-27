@@ -107,19 +107,19 @@ export function IncomesTab() {
 
       {/* ── Recurring Incomes ── */}
       <section className="flex flex-col gap-4">
-        <h3 style={{ fontSize: 16, fontWeight: 600, margin: 0 }}>Recurring Incomes</h3>
+        <h3 style={{ fontSize: 20, fontWeight: 600, margin: 0 }}>Recurring Incomes</h3>
 
         <div style={{ border: '1px solid var(--color-border)', borderRadius: 8, overflow: 'hidden' }}>
           {recurring.length === 0 ? (
-            <p style={{ padding: '20px 16px', fontSize: 13, color: 'var(--color-text-muted)', margin: 0 }}>
+            <p style={{ padding: '20px 16px', fontSize: 16, color: 'var(--color-text-muted)', margin: 0 }}>
               No recurring incomes yet.
             </p>
           ) : (
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 17 }}>
               <thead>
                 <tr style={{ background: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}>
                   {['Source', 'Amount (TND)', ''].map(h => (
-                    <th key={h} style={{ padding: '10px 16px', textAlign: h === 'Amount (TND)' ? 'right' : 'left', fontWeight: 500, fontSize: 12, color: 'var(--color-text-muted)' }}>
+                    <th key={h} style={{ padding: '10px 16px', textAlign: h === 'Amount (TND)' ? 'right' : 'left', fontWeight: 700, fontSize: 15, color: 'var(--color-text)', textTransform: 'uppercase', letterSpacing: '0.05em', fontStyle: 'normal' }}>
                       {h}
                     </th>
                   ))}
@@ -170,19 +170,19 @@ export function IncomesTab() {
 
       {/* ── Other Incomes ── */}
       <section className="flex flex-col gap-4">
-        <h3 style={{ fontSize: 16, fontWeight: 600, margin: 0 }}>Other Incomes</h3>
+        <h3 style={{ fontSize: 20, fontWeight: 600, margin: 0 }}>Other Incomes</h3>
 
         <div style={{ border: '1px solid var(--color-border)', borderRadius: 8, overflow: 'hidden' }}>
           {others.length === 0 ? (
-            <p style={{ padding: '20px 16px', fontSize: 13, color: 'var(--color-text-muted)', margin: 0 }}>
+            <p style={{ padding: '20px 16px', fontSize: 16, color: 'var(--color-text-muted)', margin: 0 }}>
               No other incomes yet.
             </p>
           ) : (
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 17 }}>
               <thead>
                 <tr style={{ background: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}>
                   {['Date', 'Source', 'Amount (TND)', ''].map(h => (
-                    <th key={h} style={{ padding: '10px 16px', textAlign: h === 'Amount (TND)' ? 'right' : 'left', fontWeight: 500, fontSize: 12, color: 'var(--color-text-muted)' }}>
+                    <th key={h} style={{ padding: '10px 16px', textAlign: h === 'Amount (TND)' ? 'right' : 'left', fontWeight: 700, fontSize: 15, color: 'var(--color-text)', textTransform: 'uppercase', letterSpacing: '0.05em', fontStyle: 'normal' }}>
                       {h}
                     </th>
                   ))}
@@ -194,7 +194,7 @@ export function IncomesTab() {
                   const e = editing[inc.id]
                   return (
                     <tr key={inc.id} style={{ borderBottom: i < others.length - 1 ? '1px solid var(--color-border)' : undefined }}>
-                      <td style={{ padding: '10px 16px', fontVariantNumeric: 'tabular-nums', fontSize: 12, color: 'var(--color-text-muted)' }}>
+                      <td style={{ padding: '10px 16px', fontVariantNumeric: 'tabular-nums', fontSize: 15, color: 'var(--color-text-muted)' }}>
                         {isEditing
                           ? <input type="date" value={e.date} onChange={ev => setEditing(p => ({ ...p, [inc.id]: { ...p[inc.id], date: ev.target.value } }))}
                               style={inputStyle} />
@@ -239,12 +239,12 @@ export function IncomesTab() {
 
       {/* ── Single Add Form ── */}
       <div style={{ border: '1px solid var(--color-border)', borderRadius: 8, padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <p style={{ margin: 0, fontWeight: 500, fontSize: 14 }}>Add income</p>
+        <p style={{ margin: 0, fontWeight: 500, fontSize: 18 }}>Add income</p>
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'flex-end' }}>
 
           {/* Type selector */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-            <label style={{ fontSize: 12, color: 'var(--color-text-muted)' }}>Type</label>
+            <label style={{ fontSize: 15, color: 'var(--color-text-muted)' }}>Type</label>
             <select
               value={addForm.type}
               onChange={e => setAddForm(p => ({ ...p, type: e.target.value as 'recurring' | 'other' }))}
@@ -258,7 +258,7 @@ export function IncomesTab() {
           {/* Date — only for Other */}
           {addForm.type === 'other' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-              <label style={{ fontSize: 12, color: 'var(--color-text-muted)' }}>Date</label>
+              <label style={{ fontSize: 15, color: 'var(--color-text-muted)' }}>Date</label>
               <input type="date" value={addForm.date} onChange={e => setAddForm(p => ({ ...p, date: e.target.value }))}
                 style={{ ...inputStyle, width: 140 }} />
             </div>
@@ -266,7 +266,7 @@ export function IncomesTab() {
 
           {/* Source */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-            <label style={{ fontSize: 12, color: 'var(--color-text-muted)' }}>Source</label>
+            <label style={{ fontSize: 15, color: 'var(--color-text-muted)' }}>Source</label>
             <input value={addForm.source} onChange={e => setAddForm(p => ({ ...p, source: e.target.value }))}
               placeholder={addForm.type === 'recurring' ? 'e.g. Salary' : 'e.g. Freelance'}
               style={{ ...inputStyle, width: 180 }} />
@@ -274,7 +274,7 @@ export function IncomesTab() {
 
           {/* Amount */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-            <label style={{ fontSize: 12, color: 'var(--color-text-muted)' }}>Amount (TND)</label>
+            <label style={{ fontSize: 15, color: 'var(--color-text-muted)' }}>Amount (TND)</label>
             <input type="number" step="0.001" value={addForm.amount} onChange={e => setAddForm(p => ({ ...p, amount: e.target.value }))}
               placeholder="0.000" style={{ ...inputStyle, width: 110, textAlign: 'right' }} />
           </div>
@@ -288,7 +288,7 @@ export function IncomesTab() {
             {adding ? 'Adding…' : '+ Add'}
           </button>
         </div>
-        {addError && <p style={{ margin: 0, fontSize: 12, color: '#f43f5e' }}>{addError}</p>}
+        {addError && <p style={{ margin: 0, fontSize: 15, color: '#f43f5e' }}>{addError}</p>}
       </div>
 
     </div>
@@ -303,7 +303,7 @@ const inputStyle: React.CSSProperties = {
   border: '1px solid var(--color-border)',
   background: 'var(--color-surface)',
   color: 'var(--color-text)',
-  fontSize: 13,
+  fontSize: 18,
   outline: 'none',
   width: '100%',
 }

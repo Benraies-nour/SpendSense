@@ -1,7 +1,7 @@
 import { PieChart, Pie, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import type { CategorySlice } from '../lib/overview'
 
-const COLORS = ['#3b82f6', '#14b8a6', '#8b5cf6', '#f59e0b', '#f43f5e', '#10b981', '#0ea5e9', '#e879f9']
+const COLORS = ['#2d8fd1', '#0d9488', '#6cb2d8', '#f59e0b', '#f43f5e', '#10b981', '#9aadb8', '#1d4e78']
 
 type Props = {
   data: CategorySlice[]

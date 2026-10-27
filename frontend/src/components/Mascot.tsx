@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import type { Category } from '../types'
-import { fetchCategories, transcribeAudio, tts, voiceChat } from '../lib/api'
+import { fetchCategories, fetchProfile, resolvePendingDraft, transcribeAudio, tts, voiceChat } from '../lib/api'
 import type { VoiceDraft } from '../lib/api'
 import { ManualEntryDialog } from './ManualEntryDialog'
 import { MascotAvatar } from './MascotAvatar'
@@ -21,18 +21,27 @@ export function Mascot({ onExpenseSaved }: Props) {
   const [categories, setCategories] = useState<Category[]>([])
   const [showForm, setShowForm]     = useState(false)
 
-  const [heard, setHeard]       = useState('')
   const [liveText, setLiveText] = useState('')
+
+  const userNameRef = useRef<string | null>(null)
+  useEffect(() => {
+    fetchProfile().then(p => { userNameRef.current = p.name || null }).catch(() => {})
+  }, [])
 
   const stateRef        = useRef<MascotState>('idle')
   const streamRef       = useRef<MediaStream | null>(null)
   const wakeRecorderRef = useRef<MediaRecorder | null>(null)
   const cmdRecorderRef  = useRef<MediaRecorder | null>(null)
   const wakeStoppedRef  = useRef(false)
+  const followUpRef        = useRef(false) // true when listening after "anything else?"
+  const confirmTimeoutRef  = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const draftRef           = useRef<VoiceDraft | null>(null)
+  const confirmListenRef   = useRef(false) // true while voice-confirm recording is active
 
   useEffect(() => { stateRef.current = state }, [state])
+  useEffect(() => { draftRef.current = draft }, [draft])
 
-  // ── Wake word loop (MediaRecorder + Whisper) ──────────────────
+  // Wake word loop (MediaRecorder + Whisper) 
   useEffect(() => {
     let stopped = false
     wakeStoppedRef.current = false
@@ -53,6 +62,7 @@ export function Mascot({ onExpenseSaved }: Props) {
     return () => {
       stopped = true
       wakeStoppedRef.current = true
+      if (confirmTimeoutRef.current) clearTimeout(confirmTimeoutRef.current)
       try { wakeRecorderRef.current?.stop() } catch (_) {}
       streamRef.current?.getTracks().forEach(t => t.stop())
     }
@@ -96,10 +106,10 @@ export function Mascot({ onExpenseSaved }: Props) {
     setTimeout(() => { try { mr.stop() } catch (_) {} }, WAKE_CHUNK_MS)
   }
 
-  // ── Activate after wake word ──────────────────────────────────
+  // Activate after wake word
   async function activateNova(stream: MediaStream, isStopped: () => boolean) {
     setState('speaking')
-    const msg = "Hi! I'm Nova. I'm listening — go ahead!"
+    const msg = `Hi${userNameRef.current ? ` ${userNameRef.current}` : ''}! How can I help you?`
     setReply(msg)
 
     try {
@@ -114,8 +124,57 @@ export function Mascot({ onExpenseSaved }: Props) {
     }
   }
 
-  // ── Record user command with live transcription ───────────────
-  function startCommandRecording(stream: MediaStream, isStopped: () => boolean) {
+  // Play "anything else?" then start a 10s follow-up window before going idle
+  async function finishConversation(stream: MediaStream, isStopped: () => boolean) {
+    const msg = "Is there anything else I can help you with?"
+    setState('speaking')
+    setReply(msg)
+    try {
+      const b64 = await tts(msg)
+      const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0))
+      const url   = URL.createObjectURL(new Blob([bytes], { type: 'audio/mpeg' }))
+      const audio = new Audio(url)
+      audio.onended = () => {
+        URL.revokeObjectURL(url)
+        setReply('')
+        // After "anything else?" listen 10s; if still nothing → go idle directly (no loop)
+        followUpRef.current = true
+        startCommandRecording(stream, isStopped, 10_000, () => {
+          followUpRef.current = false
+          resumeWake(stream, isStopped)
+        })
+      }
+      audio.play()
+    } catch {
+      setTimeout(() => { setReply(''); resumeWake(stream, isStopped) }, 1500)
+    }
+  }
+
+  // Called after confirming a task: mark draft resolved, wait 5s, ask "anything else?" → 10s → idle
+  async function postTaskFlow() {
+    if (draft?.pending_id) resolvePendingDraft(draft.pending_id, 'confirmed').catch(() => {})
+
+    const stream = streamRef.current
+    if (!stream?.active) return
+    wakeStoppedRef.current = true  // pause wake detection during flow
+    const isStopped = () => wakeStoppedRef.current
+
+    setDraft(null)
+    setReply('')
+    setState('thinking')
+
+    await new Promise<void>(res => setTimeout(res, 5000))
+    await finishConversation(stream, isStopped)
+  }
+
+  // Record user command with silence detection + live transcription
+  // onAutoStop: callback when the hard fallback timer fires with no speech (default: finishConversation)
+  function startCommandRecording(
+    stream: MediaStream,
+    isStopped: () => boolean,
+    fallbackMs?: number,
+    onAutoStop?: () => void,
+  ) {
     const allChunks: Blob[] = []
     let mr: MediaRecorder
     try { mr = new MediaRecorder(stream) } catch { return }
@@ -124,9 +183,46 @@ export function Mascot({ onExpenseSaved }: Props) {
     setLiveText('')
     setState('listening')
 
-    // Send a snapshot every 2s for live text
-    let liveTimer: ReturnType<typeof setInterval> | null = null
-    liveTimer = setInterval(async () => {
+    // Silence detection via Web Audio API
+    let audioCtx: AudioContext | null = null
+    let silenceTimer: ReturnType<typeof setTimeout> | null = null
+    let speechDetected = false
+    let silencePoller: ReturnType<typeof setInterval> | null = null
+    const SILENCE_THRESHOLD = 8   // avg amplitude (0–255)
+    const SILENCE_AFTER_MS  = 1500 // stop 1.5s after speech ends
+
+    try {
+      audioCtx = new AudioContext()
+      const source   = audioCtx.createMediaStreamSource(stream)
+      const analyser = audioCtx.createAnalyser()
+      analyser.fftSize = 256
+      source.connect(analyser)
+      const data = new Uint8Array(analyser.frequencyBinCount)
+
+      silencePoller = setInterval(() => {
+        analyser.getByteFrequencyData(data)
+        const avg = data.reduce((a, b) => a + b, 0) / data.length
+        if (avg > SILENCE_THRESHOLD) {
+          speechDetected = true
+          if (silenceTimer) { clearTimeout(silenceTimer); silenceTimer = null }
+        } else if (speechDetected && !silenceTimer) {
+          silenceTimer = setTimeout(() => { try { mr.stop() } catch (_) {} }, SILENCE_AFTER_MS)
+        }
+      }, 100)
+    } catch { /* AudioContext not available — fall back to fallback timer only */ }
+
+    // Hard fallback: if user says nothing at all, treat as auto-stop after fallbackMs
+    let wasAutoStopped = false
+    let fallbackTimer: ReturnType<typeof setTimeout> | null = null
+    if (fallbackMs) {
+      fallbackTimer = setTimeout(() => {
+        wasAutoStopped = true
+        try { mr.stop() } catch (_) {}
+      }, fallbackMs)
+    }
+
+    // Live transcription snapshot every 2s
+    const liveTimer = setInterval(async () => {
       if (allChunks.length === 0) return
       const snapshot = new Blob([...allChunks], { type: 'audio/webm' })
       try {
@@ -135,28 +231,151 @@ export function Mascot({ onExpenseSaved }: Props) {
       } catch { /* ignore */ }
     }, 2000)
 
+    function cleanup() {
+      if (liveTimer)    clearInterval(liveTimer)
+      if (fallbackTimer) clearTimeout(fallbackTimer)
+      if (silencePoller) clearInterval(silencePoller)
+      if (silenceTimer)  clearTimeout(silenceTimer)
+      audioCtx?.close().catch(() => {})
+    }
+
     mr.ondataavailable = (e) => { if (e.data.size > 0) allChunks.push(e.data) }
     mr.onstop = async () => {
-      if (liveTimer) clearInterval(liveTimer)
+      cleanup()
+
+      if (wasAutoStopped || (!speechDetected && allChunks.length < 3)) {
+        if (onAutoStop) { onAutoStop() }
+        else            { await finishConversation(stream, isStopped) }
+        return
+      }
+
       setState('thinking')
       const blob = new Blob(allChunks, { type: 'audio/webm' })
       await handleAudioReady(blob, stream, isStopped)
     }
 
-    mr.start(500) // collect chunks every 500ms
+    mr.start(500)
   }
 
-  function handleStop() {
-    try { cmdRecorderRef.current?.stop() } catch (_) {}
+  const YES_REPLIES = ['yes', 'yeah', 'yep', 'sure', 'ok', 'okay', 'oui', 'ouais',
+    'yup', 'go ahead', 'add it', 'do it', 'confirm', 'save it']
+
+  const NO_REPLIES = ['no', 'nope', 'non', 'nah', 'nothing', 'rien', 'no thanks',
+    'no thank you', 'nothing else', "that's all", "that's it", 'never mind', 'nevermind']
+
+  function clearConfirmTimeout() {
+    if (confirmTimeoutRef.current) { clearTimeout(confirmTimeoutRef.current); confirmTimeoutRef.current = null }
   }
 
-  // ── Transcribe + chat ─────────────────────────────────────────
+  function abandonCurrentDraft() {
+    const d = draftRef.current
+    if (d?.pending_id) resolvePendingDraft(d.pending_id, 'abandoned').catch(() => {})
+    setDraft(null)
+  }
+
+  function confirmPrompt(type: string) {
+    if (type === 'income')   return "Do you still want to add this income?"
+    if (type === 'category') return "Do you still want to create this category?"
+    return "Do you still want to add this expense?"
+  }
+
+  async function askConfirmAgain() {
+    if (stateRef.current !== 'confirming') return
+    const stream = streamRef.current
+    const d = draftRef.current
+    if (!stream?.active || !d) { abandonCurrentDraft(); setState('idle'); return }
+
+    const msg = confirmPrompt(d.type)
+    wakeStoppedRef.current = true
+    setState('speaking')
+    setReply(msg)
+
+    try {
+      const b64   = await tts(msg)
+      const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0))
+      const url   = URL.createObjectURL(new Blob([bytes], { type: 'audio/mpeg' }))
+      const audio = new Audio(url)
+      audio.onended = () => { URL.revokeObjectURL(url); setReply(''); setState('confirming'); listenForConfirmResponse(stream) }
+      audio.play()
+    } catch {
+      setReply('')
+      setState('confirming')
+      listenForConfirmResponse(stream)
+    }
+  }
+
+  function listenForConfirmResponse(stream: MediaStream) {
+    confirmListenRef.current = true
+    const chunks: Blob[] = []
+    let mr: MediaRecorder
+    try { mr = new MediaRecorder(stream) } catch {
+      confirmListenRef.current = false
+      abandonCurrentDraft()
+      resumeWake(stream, () => wakeStoppedRef.current)
+      return
+    }
+
+    const autoStop = setTimeout(() => { try { mr.stop() } catch {} }, 10_000)
+    mr.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data) }
+    mr.onstop = async () => {
+      clearTimeout(autoStop)
+      if (!confirmListenRef.current) return  // button clicked, already handled
+      confirmListenRef.current = false
+
+      const blob = new Blob(chunks, { type: 'audio/webm' })
+      if (blob.size < 500) { abandonCurrentDraft(); resumeWake(stream, () => wakeStoppedRef.current); return }
+
+      try {
+        const text = await transcribeAudio(blob)
+        const norm = text.trim().toLowerCase().replace(/[.,!?]+$/, '').trim()
+
+        if (YES_REPLIES.some(w => norm === w || norm.startsWith(w + ' '))) {
+          await handleConfirm(); return
+        }
+        if (NO_REPLIES.some(w => norm === w || norm.startsWith(w + ' '))) {
+          const farewell = "Okay, I'm here if you need anything."
+          abandonCurrentDraft()
+          setState('speaking')
+          setReply(farewell)
+          try {
+            const b64   = await tts(farewell)
+            const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0))
+            const url   = URL.createObjectURL(new Blob([bytes], { type: 'audio/mpeg' }))
+            const audio = new Audio(url)
+            audio.onended = () => { URL.revokeObjectURL(url); setReply(''); resumeWake(stream, () => wakeStoppedRef.current) }
+            audio.play()
+          } catch {
+            setReply('')
+            resumeWake(stream, () => wakeStoppedRef.current)
+          }
+          return
+        }
+      } catch { /* ignore */ }
+      // Not yes/no → treat as an amendment, send to Nova
+      setState('thinking')
+      await handleAudioReady(blob, stream, () => wakeStoppedRef.current)
+    }
+
+    mr.start(500)
+  }
+
+  // Transcribe + chat
   async function handleAudioReady(blob: Blob, stream: MediaStream, isStopped: () => boolean) {
     try {
       const text = await transcribeAudio(blob)
       if (!text.trim()) { resumeWake(stream, isStopped); return }
 
-      setHeard(text)
+      // If we're in the "anything else?" follow-up phase and user says no → go idle
+      if (followUpRef.current) {
+        followUpRef.current = false
+        const normalized = text.trim().toLowerCase().replace(/[.,!?]+$/, '').trim()
+        if (NO_REPLIES.some(w => normalized === w || normalized.startsWith(w + ' '))) {
+          resumeWake(stream, isStopped)
+          return
+        }
+        followUpRef.current = false
+      }
+
       const result = await voiceChat(text)
 
       const bytes = Uint8Array.from(atob(result.audio_b64), c => c.charCodeAt(0))
@@ -167,33 +386,51 @@ export function Mascot({ onExpenseSaved }: Props) {
         setDraft(result.draft)
         setReply(result.reply_text)
         setState('confirming')
-        audio.onended = () => URL.revokeObjectURL(url)
+        audio.onended = () => {
+          URL.revokeObjectURL(url)
+          // Start listening immediately — user can confirm, deny, or amend by voice
+          listenForConfirmResponse(stream)
+          confirmTimeoutRef.current = setTimeout(askConfirmAgain, 30_000)
+        }
       } else {
         setState('speaking')
         setReply(result.reply_text)
         audio.onended = () => {
           URL.revokeObjectURL(url)
-          setReply('')
-          resumeWake(stream, isStopped)
+          // Keep reply visible and go back to listening — user must tap Envoyer to reply
+          startCommandRecording(stream, isStopped, 30_000)
         }
       }
 
       audio.play()
     } catch {
-      resumeWake(stream, isStopped)
+      const errMsg = "Sorry, I couldn't find an answer. Please try again."
+      setState('speaking')
+      setReply(errMsg)
+      try {
+        const b64   = await tts(errMsg)
+        const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0))
+        const url   = URL.createObjectURL(new Blob([bytes], { type: 'audio/mpeg' }))
+        const audio = new Audio(url)
+        audio.onended = () => { URL.revokeObjectURL(url); setReply(''); resumeWake(stream, isStopped) }
+        audio.play()
+      } catch {
+        setTimeout(() => { setReply(''); resumeWake(stream, isStopped) }, 2500)
+      }
     }
   }
 
   function resumeWake(stream: MediaStream, isStopped: () => boolean) {
     setState('idle')
-    setHeard('')
     setLiveText('')
     wakeStoppedRef.current = false
     if (stream.active) setTimeout(() => recordWakeChunk(stream, isStopped), 200)
   }
 
-  // ── Confirm ───────────────────────────────────────────────────
+  // Confirm
   async function handleConfirm() {
+    clearConfirmTimeout()
+    confirmListenRef.current = false
     if (!draft) return
 
     if (draft.type === 'expense') {
@@ -201,9 +438,9 @@ export function Mascot({ onExpenseSaved }: Props) {
         const cats = categories.length > 0 ? categories : await fetchCategories()
         setCategories(cats)
       } catch { /* use whatever is already loaded */ }
-      setState('idle')
       setReply('')
       setShowForm(true)
+      // postTaskFlow called in onCreated after form submit
       return
     }
 
@@ -211,18 +448,24 @@ export function Mascot({ onExpenseSaved }: Props) {
     const targetTab = draft.type === 'income' ? 'incomes' : 'categories'
     window.location.hash = '#/app/manage'
     window.dispatchEvent(new CustomEvent('nova-set-manage-tab', { detail: targetTab }))
-    setDraft(null)
-    setReply('')
-    setState('idle')
+    postTaskFlow()  // 5s → "anything else?" → 10s → idle
   }
 
   function handleDeny() {
+    clearConfirmTimeout()
+    confirmListenRef.current = false
+    if (draft?.pending_id) resolvePendingDraft(draft.pending_id, 'abandoned').catch(() => {})
+    const stream = streamRef.current
+    if (!stream?.active) { setDraft(null); setReply(''); setState('idle'); return }
+    wakeStoppedRef.current = true
+    const isStopped = () => wakeStoppedRef.current
     setDraft(null)
     setReply('')
-    setState('idle')
+    // Ask "anything else?" immediately then listen 10s before going idle
+    finishConversation(stream, isStopped)
   }
 
-  // ── Ring color ────────────────────────────────────────────────
+  // Ring color
   const ringColor: Record<MascotState, string> = {
     idle:       '#6b7280',
     listening:  '#ef4444',
@@ -243,23 +486,17 @@ export function Mascot({ onExpenseSaved }: Props) {
 
         {state === 'listening' && (
           <div style={bubbleStyle}>
-            <p style={{ margin: '0 0 4px', fontSize: 11, color: 'var(--muted-foreground)' }}>🎙 Recording…</p>
+            <p style={{ margin: '0 0 4px', fontSize: 11, color: 'var(--muted-foreground)' }}>🎙 Listening…</p>
             {liveText && (
               <p style={{ margin: '0 0 8px', fontSize: 13, fontStyle: 'italic' }}>{liveText}</p>
             )}
-            <button onClick={handleStop} style={sendBtn}>Envoyer</button>
+            <button onClick={() => resumeWake(streamRef.current!, () => false)} style={{ ...cancelBtn, width: '100%' }}>Cancel</button>
           </div>
         )}
 
         {state === 'thinking' && (
           <div style={bubbleStyle}>
-            {heard ? (
-              <p style={{ margin: 0, fontSize: 12, color: 'var(--muted-foreground)', fontStyle: 'italic' }}>
-                &ldquo;{heard}&rdquo;
-              </p>
-            ) : (
-              <p style={{ margin: 0, color: 'var(--muted-foreground)' }}>…</p>
-            )}
+            <p style={{ margin: 0, color: 'var(--muted-foreground)' }}>…</p>
           </div>
         )}
 
@@ -330,8 +567,8 @@ export function Mascot({ onExpenseSaved }: Props) {
           }}
           onCreated={() => {
             setShowForm(false)
-            setDraft(null)
             onExpenseSaved?.()
+            postTaskFlow()  // 5s → "anything else?" → 10s → idle
           }}
           onClose={() => setShowForm(false)}
         />
@@ -340,7 +577,7 @@ export function Mascot({ onExpenseSaved }: Props) {
   )
 }
 
-// ── Styles ────────────────────────────────────────────────────
+// Styles 
 
 const container: React.CSSProperties = {
   position: 'fixed', bottom: 24, right: 24, zIndex: 100,

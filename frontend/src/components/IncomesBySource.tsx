@@ -1,7 +1,7 @@
 import { PieChart, Pie, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import type { IncomeSlice } from '../lib/overview'
 
-const COLORS = ['#10b981', '#3b82f6', '#f59e0b', '#8b5cf6', '#f43f5e', '#14b8a6', '#0ea5e9', '#e879f9']
+const COLORS = ['#10b981', '#2d8fd1', '#f59e0b', '#6cb2d8', '#f43f5e', '#0d9488', '#9aadb8', '#1d4e78']
 
 type Props = {
   data: IncomeSlice[]

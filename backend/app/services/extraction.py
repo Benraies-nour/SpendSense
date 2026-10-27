@@ -17,9 +17,9 @@ from groq import Groq, APIError, APIConnectionError, RateLimitError
 from pydantic import BaseModel
 
 from app.core.config import settings
-from app.services.ocr import parse_tnd   # reuse the same TND parsing rule
+from app.services.ocr import parse_tnd  
 
-MODEL = "openai/gpt-oss-120b"
+MODEL = "llama-3.3-70b-versatile"
 
 SYSTEM_PROMPT = """\
 You are a receipt parser. The user will give you the raw text of a receipt.

@@ -1,5 +1,5 @@
 """
-OCR service — wraps Azure Document Intelligence (prebuilt-receipt model).
+OCR service — wraps Azure Document Intelligence.
 
 """
 
@@ -81,8 +81,7 @@ def _extract_amount(field: dict | None) -> Decimal | None:
 
 def _extract_datetime(date_field: dict | None, time_field: dict | None) -> datetime | None:
     """Combine date and time fields into a UTC datetime, or return None."""
-    date_val = (date_field or {}).get("valueDate")   # "2026-10-14"
-    time_val = (time_field or {}).get("valueTime")   # "18:42:00"
+    date_val = (date_field or {}).get("valueDate")  
 
     if not date_val:
         return None
@@ -106,7 +105,6 @@ def _extract_items(items_field: dict | None) -> list[OcrItem]:
         if not name:
             continue  # skip items without a name
 
-        # Azure may use "TotalPrice" or "Price" depending on the receipt layout.
         price_field = obj.get("TotalPrice") or obj.get("Price")
         total_price = _extract_amount(price_field)
         if total_price is None:
@@ -160,8 +158,7 @@ def analyze_receipt(image_bytes: bytes) -> OcrResult:
 
     raw_text: str = result.content or ""
 
-    # Azure may return multiple documents for multi-page inputs.
-    # For receipts we always take the first one.
+
     docs = result.documents or []
     fields = docs[0].fields if docs else {}
 

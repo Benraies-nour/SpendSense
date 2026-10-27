@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     secret_key: str
     access_token_expire_minutes: int = 60 * 24 * 7  # 7 days
     groq_api_key: str = ""
+    nova_model: str = "openai/gpt-oss-20b"
     azure_di_endpoint: str = ""
     azure_di_key: str = ""
     cors_origins: str = "http://localhost:5173"

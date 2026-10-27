@@ -124,28 +124,28 @@ export function ExpensesTab() {
 
       {/* Filters */}
       <div className="flex flex-wrap gap-3 items-end bg-card border border-border rounded-lg p-3">
-        <label className="flex flex-col gap-1 text-xs text-muted-foreground">
+        <label className="flex flex-col gap-1 text-sm text-muted-foreground">
           From
           <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)}
-            className="bg-background border border-border rounded px-2 py-1 text-sm text-foreground" />
+            className="bg-background border border-border rounded px-2 py-1 text-base text-foreground" />
         </label>
-        <label className="flex flex-col gap-1 text-xs text-muted-foreground">
+        <label className="flex flex-col gap-1 text-sm text-muted-foreground">
           To
           <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)}
-            className="bg-background border border-border rounded px-2 py-1 text-sm text-foreground" />
+            className="bg-background border border-border rounded px-2 py-1 text-base text-foreground" />
         </label>
-        <label className="flex flex-col gap-1 text-xs text-muted-foreground">
+        <label className="flex flex-col gap-1 text-sm text-muted-foreground">
           Category
           <select value={catFilter} onChange={e => setCatFilter(e.target.value)}
-            className="bg-background border border-border rounded px-2 py-1 text-sm text-foreground">
+            className="bg-background border border-border rounded px-2 py-1 text-base text-foreground">
             <option value="">All</option>
             {categories.map(c => <option key={c.id} value={String(c.id)}>{c.name}</option>)}
           </select>
         </label>
-        <label className="flex flex-col gap-1 text-xs text-muted-foreground">
+        <label className="flex flex-col gap-1 text-sm text-muted-foreground">
           Source
           <select value={srcFilter} onChange={e => setSrcFilter(e.target.value)}
-            className="bg-background border border-border rounded px-2 py-1 text-sm text-foreground">
+            className="bg-background border border-border rounded px-2 py-1 text-base text-foreground">
             <option value="">All</option>
             <option value="receipt">Receipt</option>
             <option value="voice">Voice</option>
@@ -159,9 +159,9 @@ export function ExpensesTab() {
         {filtered.length === 0 ? (
           <p className="text-sm text-muted-foreground p-6">No expenses for this period.</p>
         ) : (
-          <table className="w-full text-sm">
+          <table className="w-full text-base">
             <thead>
-              <tr className="border-b border-border bg-muted/30 text-xs text-muted-foreground uppercase tracking-wide">
+              <tr className="border-b border-border bg-white text-sm text-foreground uppercase tracking-wide">
                 <th className="px-4 py-2 text-left">Date</th>
                 <th className="px-4 py-2 text-left">Description</th>
                 <th className="px-4 py-2 text-left">Category</th>
@@ -174,27 +174,27 @@ export function ExpensesTab() {
             <tbody>
               {filtered.sort((a, b) => b.date.localeCompare(a.date)).map(exp => (
                 <tr key={exp.id} className="border-b border-border last:border-0 hover:bg-accent/30 transition-colors">
-                  <td className="px-4 py-2.5 font-mono text-xs text-muted-foreground">{exp.date}</td>
+                  <td className="px-4 py-2.5 font-mono text-sm text-muted-foreground">{exp.date}</td>
                   <td className="px-4 py-2.5">{exp.description || '—'}</td>
                   <td className="px-4 py-2.5">
-                    <span className="bg-primary/15 text-primary text-xs px-2 py-0.5 rounded-full">{catName(exp.category)}</span>
+                    <span className="bg-primary/15 text-primary text-sm px-2 py-0.5 rounded-full">{catName(exp.category)}</span>
                   </td>
                   <td className="px-4 py-2.5">
                     {exp.source === 'receipt' && exp.receiptId ? (
                       <button
                         onClick={() => setReceiptModal(exp.receiptId!)}
-                        className="text-xs px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-400 hover:bg-sky-500/25 transition-colors capitalize cursor-pointer"
+                        className="text-sm px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-400 hover:bg-sky-500/25 transition-colors capitalize cursor-pointer"
                       >
                         receipt
                       </button>
                     ) : (
-                      <span className="text-xs text-muted-foreground capitalize">{exp.source}</span>
+                      <span className="text-sm text-muted-foreground capitalize">{exp.source}</span>
                     )}
                   </td>
                   <td className="px-4 py-2.5">
                     {exp.isRecurring
-                      ? <span className="text-xs text-teal-400">✓ {exp.dueDay ? `day ${exp.dueDay}` : 'yes'}</span>
-                      : <span className="text-xs text-muted-foreground">—</span>}
+                      ? <span className="text-sm text-teal-400">✓ {exp.dueDay ? `day ${exp.dueDay}` : 'yes'}</span>
+                      : <span className="text-sm text-muted-foreground">—</span>}
                   </td>
                   <td className="px-4 py-2.5 text-right font-mono font-medium text-rose-400">{exp.amount}</td>
                   <td className="px-4 py-2.5">

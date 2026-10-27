@@ -338,6 +338,7 @@ export type VoiceExpenseDraft = {
   category_id: number | null
   category_name: string
   date: string
+  pending_id: number | null
 }
 
 export type VoiceIncomeDraft = {
@@ -346,12 +347,14 @@ export type VoiceIncomeDraft = {
   source: string
   date: string
   is_recurring: boolean
+  pending_id: number | null
 }
 
 export type VoiceCategoryDraft = {
   type: 'category'
   name: string
   budget_amount: string
+  pending_id: number | null
 }
 
 export type VoiceDraft = VoiceExpenseDraft | VoiceIncomeDraft | VoiceCategoryDraft
@@ -410,6 +413,10 @@ export async function confirmReceipt(payload: ConfirmReceiptPayload): Promise<Re
   return res.json()
 }
 
-export async function clearVoiceHistory(): Promise<void> {
-  await fetch(`${API_BASE}/voice/history`, { method: 'DELETE', headers: authHeaders() })
+export async function resolvePendingDraft(pendingId: number, status: 'confirmed' | 'abandoned'): Promise<void> {
+  await fetch(`${API_BASE}/voice/pending/${pendingId}`, {
+    method: 'PATCH',
+    headers: authHeaders(),
+    body: JSON.stringify({ status }),
+  })
 }

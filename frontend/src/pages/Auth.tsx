@@ -123,9 +123,7 @@ export function Auth({ mode, theme, onToggleTheme }: AuthProps) {
 
           {isLogin ? (
             <form className="auth-form" noValidate onSubmit={handleSubmit}>
-              <div>
-                <h2>Welcome back</h2>
-              </div>
+              
               <TextField
                 label="Email"
                 type="email"
@@ -155,10 +153,7 @@ export function Auth({ mode, theme, onToggleTheme }: AuthProps) {
             </form>
           ) : (
             <form className="auth-form" noValidate onSubmit={handleSubmit}>
-              <div>
-                <h2>Create your account</h2>
-                
-              </div>
+              
               <TextField label="Name" type="text" autoComplete="name" {...fieldProps('name')} />
               <TextField
                 label="Email"
