@@ -1,8 +1,8 @@
 # SpendSense
 
-**Live app:** [spend-sense-teal.vercel.app](https://spend-sense-teal.vercel.app) &nbsp;·&nbsp; **API:** [spendsense-yak7.onrender.com](https://spendsense-yak7.onrender.com/docs)
-
 ## Project Overview
+
+![Python](https://img.shields.io/badge/Python-3.13-blue) ![FastAPI](https://img.shields.io/badge/FastAPI-green) ![React](https://img.shields.io/badge/React-TypeScript-61DAFB) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-blue) ![Groq](https://img.shields.io/badge/Groq-LLM-orange) ![edge--tts](https://img.shields.io/badge/edge--tts-TTS-lightgrey)
 
 SpendSense is a personal budget management web application. It helps users record their daily expenses and income, allocate monthly budgets per category, and monitor their financial activity through a dedicated dashboard.
 
