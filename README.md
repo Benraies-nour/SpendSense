@@ -151,7 +151,7 @@ Review the generated file in `alembic/versions/` before applying it.
 3. **Record income.** Go to *Manage → Incomes* to add a one-off or recurring income.
 
 4. **Add an expense.** From *Manage → Expenses*, choose one of three input methods:
-   - **Scan receipt** — upload a photo (JPEG, PNG, PDF; 4 MB max). Review the detected items, assign categories, and confirm.
+   - **Scan receipt** — upload a photo . Review the detected items, assign categories, and confirm.
    - **Manual entry** — fill in description, amount, category, and date.
    - **Voice (Nova)** — say *"Nova"* to activate the assistant. Describe what you want in English (e.g. *"I spent 12 dinars on groceries"*). Nova drafts the entry and asks for confirmation before saving.
 
@@ -159,7 +159,7 @@ Review the generated file in `alembic/versions/` before applying it.
 
 ## Nova — Voice Assistant
 
-Nova is a voice-first financial assistant built on a ReAct agentic loop:
+Nova is a voice l assistant built on a ReAct agentic loop:
 
 1. **Wake word** — Nova activates when it hears *"Nova"*.
 2. **Listen** — Nova records the user's request and auto-stops after 1.5 seconds of silence.
