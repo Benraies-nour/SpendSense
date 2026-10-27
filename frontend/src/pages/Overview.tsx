@@ -3,8 +3,9 @@ import type { Category, CategoryId, Expense, Income } from '../types'
 import { OverviewFilters } from '../components/OverviewFilters'
 import { StatCard } from '../components/StatCard'
 import { fetchCategories, fetchExpenses, fetchIncomes } from '../lib/api'
-import { getOverview, getExpensesByCategory, getBudgetVsActual, getExpensesTrend } from '../lib/overview'
+import { getOverview, getExpensesByCategory, getBudgetVsActual, getExpensesTrend, getIncomesBySource } from '../lib/overview'
 import { ExpensesByCategory } from '../components/ExpensesByCategory'
+import { IncomesBySource } from '../components/IncomesBySource'
 import { BudgetVsActual } from '../components/BudgetVsActual'
 import { ExpensesTrend } from '../components/ExpensesTrend'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -72,6 +73,7 @@ function handleEndDateChange(value: string) {
 
 const data = getOverview(expenses, incomes, categories, startDate, endDate, selectedCategories)
 const categorySlices = getExpensesByCategory(expenses, categories, startDate, endDate, selectedCategories)
+const incomeSlices = getIncomesBySource(incomes, startDate, endDate)
 const budgetBars = getBudgetVsActual(expenses, incomes, categories, startDate, endDate, selectedCategories)
 const trendPoints = getExpensesTrend(expenses, incomes, startDate, endDate, selectedCategories)
 
@@ -91,6 +93,15 @@ const trendPoints = getExpensesTrend(expenses, incomes, startDate, endDate, sele
 
   return (
     <div className="flex flex-col gap-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-xl font-normal text-foreground">Overview</h1>
+          <p className="text-base text-muted-foreground mt-1">Your financial summary</p>
+        </div>
+        <p className="text-base text-foreground italic hidden md:block">
+          Today : {new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+        </p>
+      </div>
       <OverviewFilters
         month={month}
         onMonthChange={handleMonthChange}
@@ -103,23 +114,27 @@ const trendPoints = getExpensesTrend(expenses, incomes, startDate, endDate, sele
         onCategoriesChange={setSelectedCategories}
       />
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-        <StatCard title="Total Income"     value={`${data.totalIncome} TND`} />
-        <StatCard title="Total Expenses"   value={`${data.totalSpent} TND`} />
-        <StatCard title="Total Budget"     value={`${data.totalBudget} TND`} />
-        <StatCard title="Remaining Budget" value={`${data.remainingBudget} TND`} />
-        <StatCard title="Transactions"     value={String(data.transactionCount)} />
+        <StatCard title="Total Income"     value={`${data.totalIncome} TND`}     index={0} />
+        <StatCard title="Total Expenses"   value={`${data.totalSpent} TND`}      index={1} />
+        <StatCard title="Total Budget"     value={`${data.totalBudget} TND`}     index={2} />
+        <StatCard title="Remaining Budget" value={`${data.remainingBudget} TND`} index={3} />
+        <StatCard title="Transactions"     value={String(data.transactionCount)} index={4} />
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
+        <Card className="animate-in fade-in slide-in-from-bottom-4 transition-all duration-200 hover:shadow-lg" style={{ animationDuration: '0.4s', animationDelay: '420ms', animationFillMode: 'both' }}>
           <CardHeader><CardTitle>Expenses by Category</CardTitle></CardHeader>
           <CardContent><ExpensesByCategory data={categorySlices} /></CardContent>
         </Card>
-        <Card>
-          <CardHeader><CardTitle>Budget vs Actual</CardTitle></CardHeader>
-          <CardContent><BudgetVsActual data={budgetBars} /></CardContent>
+        <Card className="animate-in fade-in slide-in-from-bottom-4 transition-all duration-200 hover:shadow-lg" style={{ animationDuration: '0.4s', animationDelay: '500ms', animationFillMode: 'both' }}>
+          <CardHeader><CardTitle>Income by Source</CardTitle></CardHeader>
+          <CardContent><IncomesBySource data={incomeSlices} /></CardContent>
         </Card>
       </div>
-      <Card>
+      <Card className="animate-in fade-in slide-in-from-bottom-4 transition-all duration-200 hover:shadow-lg" style={{ animationDuration: '0.4s', animationDelay: '580ms', animationFillMode: 'both' }}>
+        <CardHeader><CardTitle>Budget vs Actual</CardTitle></CardHeader>
+        <CardContent><BudgetVsActual data={budgetBars} /></CardContent>
+      </Card>
+      <Card className="animate-in fade-in slide-in-from-bottom-4 transition-all duration-200 hover:shadow-lg" style={{ animationDuration: '0.4s', animationDelay: '660ms', animationFillMode: 'both' }}>
         <CardHeader><CardTitle>Income vs Expenses</CardTitle></CardHeader>
         <CardContent><ExpensesTrend data={trendPoints} /></CardContent>
       </Card>

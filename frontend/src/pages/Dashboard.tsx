@@ -3,7 +3,7 @@ import { ReceiptIcon, MoonIcon, SunIcon } from '@phosphor-icons/react'
 import { LayoutDashboard, FolderKanban, Settings as SettingsIcon, DollarSign, TrendingUp, Tag, LogOut } from 'lucide-react'
 import type { AppTab } from '../hooks/useHashRoute'
 import { navigate, routeHref } from '../hooks/useHashRoute'
-import { clearToken, clearVoiceHistory } from '../lib/api'
+import { clearToken } from '../lib/api'
 import type { Theme } from '../hooks/useTheme'
 import { Overview } from './Overview'
 import { Manage } from './Manage'
@@ -123,7 +123,7 @@ export function Dashboard({ tab, theme, onToggleTheme }: DashboardProps) {
         {/* Log out */}
         <div style={{ padding: '12px 8px', borderTop: '1px solid var(--border)' }}>
           <button
-            onClick={() => { clearVoiceHistory(); clearToken(); navigate('home') }}
+            onClick={() => { clearToken(); navigate('home') }}
             className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium w-full border-none cursor-pointer transition-colors text-muted-foreground hover:text-foreground hover:bg-accent bg-transparent"
           >
             <LogOut size={16} />

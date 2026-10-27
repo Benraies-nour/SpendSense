@@ -88,6 +88,29 @@ export function getExpensesByCategory(
     .filter(slice => slice.value > 0)
 }
 
+export type IncomeSlice = {
+  name: string
+  value: number
+}
+
+export function getIncomesBySource(
+  incomes: Income[],
+  startDate: string,
+  endDate: string,
+): IncomeSlice[] {
+  const filtered = incomes.filter(i => i.date >= startDate && i.date <= endDate)
+
+  const bySource: Record<string, number> = {}
+  filtered.forEach(i => {
+    const key = i.description || 'Other'
+    bySource[key] = (bySource[key] ?? 0) + toMillimes(i.amount) / 1000
+  })
+
+  return Object.entries(bySource)
+    .map(([name, value]) => ({ name, value }))
+    .filter(s => s.value > 0)
+}
+
 export type TrendPoint = {
   date: string
   expenses: number

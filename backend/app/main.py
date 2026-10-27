@@ -41,7 +41,9 @@ app.include_router(voice_router)
 @app.exception_handler(Exception)
 async def unhandled_exception_handler(request: Request, exc: Exception):
     logger.exception("Unhandled error on %s %s", request.method, request.url.path)
-    return JSONResponse(status_code=500, content={"detail": "Internal server error."})
+    origin = request.headers.get("origin", "")
+    headers = {"Access-Control-Allow-Origin": origin} if origin in settings.cors_origins_list else {}
+    return JSONResponse(status_code=500, content={"detail": "Internal server error."}, headers=headers)
 
 
 @app.get("/")

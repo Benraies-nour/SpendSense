@@ -11,7 +11,7 @@ function readStoredTheme(): Theme {
   } catch {
     // Storage can be unavailable (private mode, blocked site data).
   }
-  return 'light'
+  return 'dark'
 }
 
 /** Current theme, applied to <html data-theme> and remembered across visits. */

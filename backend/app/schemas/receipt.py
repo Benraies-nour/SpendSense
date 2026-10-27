@@ -12,7 +12,7 @@ class ReceiptItemRead(SQLModel):
     id: int
     receipt_id: int
     name: str
-    quantity: Decimal | None
+    quantity: int | None
     total_price: Decimal
     category_id: int | None = None
 
@@ -35,7 +35,7 @@ class ReceiptRead(SQLModel):
 
 class DraftItem(SQLModel):
     name: str
-    quantity: Decimal | None = None
+    quantity: int | None = None
     total_price: Decimal
     category_id: int | None = None   # always null from the scan; user fills it
 
@@ -55,7 +55,7 @@ class ReceiptDraft(SQLModel):
 
 class ConfirmItem(SQLModel):
     name: str
-    quantity: Decimal | None = None
+    quantity: int | None = None
     total_price: Decimal
     category_id: int                       # required — user assigns a category per item
 

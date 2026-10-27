@@ -2,6 +2,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
@@ -15,76 +16,78 @@
   --chip-fg: #e0f0ff;
   --color-danger: oklch(0.75 0.13 25);
   --muted: #1a2744;
-  --label: color-mix(in srgb, var(--color-text) 82%, transparent);
+  --label: color-mix(in srgb, var(--color-text) 92%, transparent);
   --background: #060d1f;
   --foreground: #e0f0ff;
   --card: #0d1b38;
   --card-foreground: #e0f0ff;
   --popover: #0d1b38;
   --popover-foreground: #e0f0ff;
-  --primary: #3b82f6;
+  --primary: #1c3d8a;
   --primary-foreground: #ffffff;
   --secondary: #1a2744;
   --secondary-foreground: #e0f0ff;
-  --muted-foreground: #7aa3d4;
-  --accent: #1e3a5f;
+  --muted-foreground: #a8c8e8;
+  --accent: #1a2f5e;
   --accent-foreground: #e0f0ff;
   --destructive: oklch(0.577 0.245 27.325);
   --border: color-mix(in srgb, #e0f0ff 14%, transparent);
   --input: #1a2744;
-  --ring: #3b82f6;
-  --chart-1: #3b82f6;
+  --ring: #1c3d8a;
+  --chart-1: #2d8fd1;
   --chart-2: #14b8a6;
-  --chart-3: #8b5cf6;
+  --chart-3: #6cb2d8;
   --chart-4: #f59e0b;
   --chart-5: #f43f5e;
   --radius: 0.625rem;
   --sidebar: #0d1b38;
   --sidebar-foreground: #e0f0ff;
-  --sidebar-primary: #3b82f6;
+  --sidebar-primary: #1c3d8a;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #1e3a5f;
+  --sidebar-accent: #1a2f5e;
   --sidebar-accent-foreground: #e0f0ff;
   --sidebar-border: color-mix(in srgb, #e0f0ff 14%, transparent);
-  --sidebar-ring: #3b82f6;
+  --sidebar-ring: #1c3d8a;
 }
 :root[data-theme='light'] {
   color-scheme: light;
   --color-bg: #e4e7f5;
   --color-surface: #f3f5fe;
   --color-text: #292b31;
-  --color-accent: #5d5294;
-  --color-accent-400: #423a6a;
+  --color-accent: #1c3d8a;
+  --color-accent-400: #122868;
   --color-divider: color-mix(in srgb, #292b31 18%, transparent);
   --shadow-sm: 0 0 0 1px #cfd3e5;
-  --shadow-md: 0 0 0 1px #cfd3e5, 0 10px 28px rgba(41, 43, 49, 0.08);
-  --shadow-lg: 0 0 0 1px #b2b6ca, 0 18px 44px rgba(41, 43, 49, 0.12);
-  --chip-bg: #e7e5fe;
-  --chip-fg: #5d5294;
+  --shadow-md: 0 0 0 1px #cfd3e5, 0 10px 28px rgba(41,43,49,0.08);
+  --shadow-lg: 0 0 0 1px #b2b6ca, 0 18px 44px rgba(41,43,49,0.12);
+  --chip-bg: #c9d5ee;
+  --chip-fg: #1c3d8a;
   --color-danger: oklch(0.5 0.16 25);
-  --background: #eff6ff;
-  --foreground: #0f172a;
+  --background: #e8edf8;
+  --foreground: #0b1a48;
   --card: #ffffff;
-  --card-foreground: #0f172a;
+  --card-foreground: #0b1a48;
   --popover: #ffffff;
-  --popover-foreground: #0f172a;
-  --primary: #2563eb;
+  --popover-foreground: #0b1a48;
+  --primary: #1c3d8a;
   --primary-foreground: #ffffff;
-  --secondary: #dbeafe;
-  --secondary-foreground: #1e40af;
-  --muted: #dbeafe;
-  --muted-foreground: #3b6cb7;
-  --accent: #bfdbfe;
-  --accent-foreground: #1e40af;
-  --border: #bfdbfe;
-  --input: #bfdbfe;
-  --ring: #2563eb;
-  --chart-1: #2563eb;
+  --secondary: #c9d5ee;
+  --secondary-foreground: #122868;
+  --muted: #c9d5ee;
+  --muted-foreground: #2a55b0;
+  --accent: #9db5e2;
+  --accent-foreground: #0b1a48;
+  --border: #9db5e2;
+  --input: #c9d5ee;
+  --ring: #1c3d8a;
+  --chart-1: #2d8fd1;
   --chart-2: #0d9488;
-  --chart-3: #7c3aed;
+  --chart-3: #6cb2d8;
   --chart-4: #d97706;
   --chart-5: #e11d48;
 }
+
+html { font-size: 19px; }
 
 a { color: var(--color-accent); }
 a:hover { color: var(--color-accent-400); }
@@ -119,7 +122,7 @@ a:hover { color: var(--color-accent-400); }
   align-items: center;
   gap: 8px;
   color: var(--color-text);
-  font-size: 18px;
+  font-size: 22px;
 }
 .site-header .nav-brand svg { color: var(--color-accent); }
 .theme-toggle { color: var(--color-text); width: 40px; height: 40px; }
@@ -129,7 +132,7 @@ a:hover { color: var(--color-accent-400); }
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: 11px;
+  font-size: 14px;
   padding: 3px 10px;
   border-radius: 6px;
   background: var(--chip-bg);
@@ -160,6 +163,7 @@ a:hover { color: var(--color-accent-400); }
   letter-spacing: -0.035em;
   line-height: 1;
   margin: 0;
+  font-style: italic;
 }
 .hero-tagline {
   font-size: clamp(17px, 2cqi, 20px);
@@ -175,7 +179,7 @@ a:hover { color: var(--color-accent-400); }
   gap: 12px;
   margin-top: 12px;
 }
-.hero-actions .btn { min-height: 44px; font-size: 15px; }
+.hero-actions .btn { min-height: 44px; font-size: 18px; }
 .hero-actions .btn-primary { padding: 0 22px; }
 .hero-actions .btn-ghost { padding: 0 12px; }
 
@@ -223,7 +227,7 @@ a:hover { color: var(--color-accent-400); }
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+  color: color-mix(in srgb, var(--color-text) 80%, transparent);
 }
 .app-body {
   position: relative;
@@ -292,7 +296,7 @@ a:hover { color: var(--color-accent-400); }
 }
 .app-kpi-lbl {
   font-size: 8px;
-  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+  color: color-mix(in srgb, var(--color-text) 80%, transparent);
   text-align: center;
 }
 
@@ -313,7 +317,7 @@ a:hover { color: var(--color-accent-400); }
 .app-chart-label {
   font-size: 9px;
   font-weight: 600;
-  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+  color: color-mix(in srgb, var(--color-text) 80%, transparent);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -355,7 +359,7 @@ a:hover { color: var(--color-accent-400); }
 }
 .mini-legend-lbl {
   font-size: 9px;
-  color: color-mix(in srgb, var(--color-text) 70%, transparent);
+  color: color-mix(in srgb, var(--color-text) 88%, transparent);
 }
 
 /* Mini bars */
@@ -372,7 +376,7 @@ a:hover { color: var(--color-accent-400); }
 }
 .mini-bar-lbl {
   font-size: 9px;
-  color: color-mix(in srgb, var(--color-text) 70%, transparent);
+  color: color-mix(in srgb, var(--color-text) 88%, transparent);
 }
 .mini-bar-track {
   height: 4px;
@@ -407,7 +411,7 @@ a:hover { color: var(--color-accent-400); }
 }
 .app-cat-amount {
   font-size: 10px;
-  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+  color: color-mix(in srgb, var(--color-text) 80%, transparent);
   font-variant-numeric: tabular-nums;
 }
 .app-bbar {
@@ -460,7 +464,7 @@ a:hover { color: var(--color-accent-400); }
 }
 .app-income-meta {
   font-size: 9px;
-  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+  color: color-mix(in srgb, var(--color-text) 80%, transparent);
 }
 .app-income-amount {
   font-size: 11px;
@@ -507,13 +511,13 @@ a:hover { color: var(--color-accent-400); }
   border-radius: var(--radius-lg);
 }
 .auth-tabs { display: flex; width: 100%; }
-.auth-tabs .seg-opt { flex: 1; justify-content: center; min-height: 40px; font-size: 14px; }
+.auth-tabs .seg-opt { flex: 1; justify-content: center; min-height: 40px; font-size: 17px; }
 .auth-form { display: flex; flex-direction: column; gap: 18px; margin-top: 28px; }
-.auth-form h2 { font-size: 24px; margin: 0 0 4px; }
-.auth-form .btn-block { min-height: 44px; font-size: 15px; }
-.auth-switch { margin: 4px 0 0; font-size: 14px; color: var(--foreground); }
+.auth-form h2 { font-size: 30px; margin: 0 0 4px; }
+.auth-form .btn-block { min-height: 44px; font-size: 18px; }
+.auth-switch { margin: 4px 0 0; font-size: 17px; color: var(--foreground); }
 
-.field > label, .field-label-row > label { font-size: 13px; color: var(--label); }
+.field > label, .field-label-row > label { font-size: 16px; color: var(--label); }
 .field-label-row {
   display: flex;
   justify-content: space-between;
@@ -521,10 +525,10 @@ a:hover { color: var(--color-accent-400); }
   margin-bottom: 5px;
 }
 .field-label-row > label { margin: 0; }
-.field-label-row > a { font-size: 13px; }
+.field-label-row > a { font-size: 16px; }
 .field .input { min-height: 44px; }
 .field .input[aria-invalid='true'] { border-color: var(--color-danger); }
-.field-hint { margin: 6px 0 0; font-size: 13px; color: var(--muted-foreground); }
+.field-hint { margin: 6px 0 0; font-size: 16px; color: var(--muted-foreground); }
 .field-error,
 .form-error {
   display: flex;
@@ -538,8 +542,8 @@ a:hover { color: var(--color-accent-400); }
 /* — shared — */
 .muted { color: var(--muted-foreground); }
 .tabular { font-variant-numeric: tabular-nums; }
-.text-xs { font-size: 11px; }
-.auth-intro { margin: 0; font-size: 14px; }
+.text-xs { font-size: 14px; }
+.auth-intro { margin: 0; font-size: 17px; }
 
 /* — signed-in area — */
 .app-nav {
@@ -555,7 +559,7 @@ a:hover { color: var(--color-accent-400); }
   margin: 0 auto;
   padding: 32px 24px 64px;
 }
-.app-title { font-size: 32px; margin: 0 0 4px; }
+.app-title { font-size: 40px; margin: 0 0 4px; }
 
 /* Narrow screens: the tab bar moves to its own full-width row. */
 @container (max-width: 560px) {
@@ -584,7 +588,7 @@ a:hover { color: var(--color-accent-400); }
 }
 
 @theme inline {
-  --font-heading: var(--font-sans);
+  --font-heading: 'Space Grotesk', sans-serif;
   --font-sans: 'Geist Variable', sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);

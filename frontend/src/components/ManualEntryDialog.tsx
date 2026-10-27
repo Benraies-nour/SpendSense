@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { Category, Expense } from '../types'
-import { createExpense } from '../lib/api'
+import { createExpense, updateExpense } from '../lib/api'
 
 type InitialValues = {
   description?: string
@@ -8,6 +8,8 @@ type InitialValues = {
   category_id?: number | null
   date?: string
   source?: 'manual' | 'voice'
+  is_recurring?: boolean
+  due_day?: number | null
 }
 
 type Props = {
@@ -15,20 +17,22 @@ type Props = {
   onCreated: (expense: Expense) => void
   onClose: () => void
   initialValues?: InitialValues
+  expenseId?: string
+  onUpdated?: (expense: Expense) => void
 }
 
 function todayISO() {
   return new Date().toISOString().slice(0, 10)
 }
 
-export function ManualEntryDialog({ categories, onCreated, onClose, initialValues }: Props) {
+export function ManualEntryDialog({ categories, onCreated, onClose, initialValues, expenseId, onUpdated }: Props) {
   const [form, setForm] = useState({
     description: initialValues?.description ?? '',
     amount:      initialValues?.amount      ?? '',
     category_id: initialValues?.category_id ?? categories[0]?.id ?? 0,
     date:        initialValues?.date        ?? todayISO(),
-    is_recurring: false,
-    due_day: '',
+    is_recurring: initialValues?.is_recurring ?? false,
+    due_day: initialValues?.due_day ? String(initialValues.due_day) : '',
   })
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(false)
@@ -48,16 +52,28 @@ export function ManualEntryDialog({ categories, onCreated, onClose, initialValue
     setError('')
     setSaving(true)
     try {
-      const expense = await createExpense({
-        description: form.description.trim(),
-        amount: form.amount,
-        category_id: Number(form.category_id),
-        date: form.date,
-        source: initialValues?.source ?? 'manual',
-        is_recurring: form.is_recurring,
-        due_day: form.is_recurring && form.due_day ? parseInt(form.due_day) : null,
-      })
-      onCreated(expense)
+      if (expenseId) {
+        const expense = await updateExpense(expenseId, {
+          description: form.description.trim(),
+          amount: form.amount,
+          category_id: Number(form.category_id),
+          date: form.date,
+          is_recurring: form.is_recurring,
+          due_day: form.is_recurring && form.due_day ? parseInt(form.due_day) : null,
+        })
+        onUpdated?.(expense)
+      } else {
+        const expense = await createExpense({
+          description: form.description.trim(),
+          amount: form.amount,
+          category_id: Number(form.category_id),
+          date: form.date,
+          source: initialValues?.source ?? 'manual',
+          is_recurring: form.is_recurring,
+          due_day: form.is_recurring && form.due_day ? parseInt(form.due_day) : null,
+        })
+        onCreated(expense)
+      }
     } catch {
       setError('Failed to save expense. Check the backend is running.')
     } finally {
@@ -69,7 +85,7 @@ export function ManualEntryDialog({ categories, onCreated, onClose, initialValue
     <div style={overlay} onClick={e => { if (e.target === e.currentTarget) onClose() }}>
       <div style={dialog}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-          <h2 style={{ margin: 0, fontSize: 16, fontWeight: 600 }}>Add expense manually</h2>
+          <h2 style={{ margin: 0, fontSize: 16, fontWeight: 600 }}>{expenseId ? 'Edit expense' : 'Add expense manually'}</h2>
           <button onClick={onClose} style={closeBtn}>✕</button>
         </div>
 
@@ -146,7 +162,7 @@ export function ManualEntryDialog({ categories, onCreated, onClose, initialValue
           <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 4 }}>
             <button type="button" onClick={onClose} style={cancelBtn}>Cancel</button>
             <button type="submit" disabled={saving} style={{ ...submitBtn, opacity: saving ? 0.6 : 1 }}>
-              {saving ? 'Saving…' : 'Save expense'}
+              {saving ? 'Saving…' : expenseId ? 'Update expense' : 'Save expense'}
             </button>
           </div>
 

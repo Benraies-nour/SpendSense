@@ -17,7 +17,7 @@ export function BudgetVsActual({ data }: Props) {
         <YAxis unit=" TND" />
         <Tooltip formatter={(value) => [`${Number(value).toFixed(3)} TND`]} />
         <Legend />
-        <Bar dataKey="budget" name="Budget" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="budget" name="Budget" fill="#2d8fd1" radius={[4, 4, 0, 0]} />
         <Bar dataKey="spent"  name="Spent"  fill="#14b8a6" radius={[4, 4, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>

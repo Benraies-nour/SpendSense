@@ -17,9 +17,9 @@ from groq import Groq, APIError, APIConnectionError, RateLimitError
 from pydantic import BaseModel
 
 from app.core.config import settings
-from app.services.ocr import parse_tnd   # reuse the same TND parsing rule
+from app.services.ocr import parse_tnd  
 
-MODEL = "openai/gpt-oss-120b"
+MODEL = "llama-3.3-70b-versatile"
 
 SYSTEM_PROMPT = """\
 You are a receipt parser. The user will give you the raw text of a receipt.
@@ -43,7 +43,7 @@ Example output:
 
 class ExtractedItem(BaseModel):
     name: str
-    quantity: Decimal | None = None
+    quantity: int | None = None
     total_price: Decimal
 
 
@@ -60,12 +60,12 @@ def _parse_item(raw: dict) -> ExtractedItem | None:
     except ValueError:
         return None
 
-    quantity: Decimal | None = None
+    quantity: int | None = None
     qty_text = raw.get("quantity")
     if qty_text:
         try:
-            quantity = Decimal(str(qty_text)).quantize(Decimal("0.001"))
-        except InvalidOperation:
+            quantity = int(Decimal(str(qty_text)))
+        except (InvalidOperation, ValueError):
             pass
 
     return ExtractedItem(name=name, quantity=quantity, total_price=total_price)

@@ -234,7 +234,10 @@ export function ScanReceiptDialog({ categories, onConfirmed, onClose }: Props) {
                   <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 4 }}>
                     <input
                       value={item.quantity ?? ''}
-                      onChange={e => updateItem(i, { quantity: e.target.value || null })}
+                      onChange={e => {
+                        const v = e.target.value
+                        updateItem(i, { quantity: v === '' ? null : (parseInt(v, 10) || null) })
+                      }}
                       placeholder="Qty"
                       style={{ ...inputStyle, fontSize: 12, textAlign: 'right' }}
                     />

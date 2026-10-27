@@ -164,6 +164,41 @@ export async function createExpense(payload: {
   }
 }
 
+export async function updateExpense(id: string, data: Partial<{
+  description: string
+  amount: string
+  category_id: number
+  date: string
+  is_recurring: boolean
+  due_day: number | null
+}>): Promise<Expense> {
+  const body: Record<string, unknown> = {}
+  if (data.description !== undefined) body.description = data.description
+  if (data.amount !== undefined) body.amount = data.amount
+  if (data.category_id !== undefined) body.category_id = data.category_id
+  if (data.date !== undefined) body.created_at = `${data.date}T00:00:00Z`
+  if (data.is_recurring !== undefined) body.is_recurring = data.is_recurring
+  if (data.due_day !== undefined) body.due_day = data.due_day
+  const res = await fetch(`${API_BASE}/expenses/${id}`, {
+    method: 'PATCH',
+    headers: authHeaders(),
+    body: JSON.stringify(body),
+  })
+  if (!res.ok) throw new Error('Failed to update expense.')
+  const e = await res.json()
+  return {
+    id: String(e.id),
+    date: e.created_at.slice(0, 10),
+    description: e.description ?? '',
+    amount: Number(e.amount).toFixed(3),
+    category: e.category_id,
+    source: e.source,
+    isRecurring: e.is_recurring,
+    dueDay: e.due_day ?? null,
+    receiptId: e.receipt_id ?? null,
+  }
+}
+
 export async function deleteExpense(id: string): Promise<void> {
   const res = await fetch(`${API_BASE}/expenses/${id}`, { method: 'DELETE', headers: authHeaders() })
   if (!res.ok) throw new Error('Erreur suppression dépense')
@@ -221,7 +256,7 @@ export async function deleteIncome(id: string): Promise<void> {
 
 export type DraftItem = {
   name: string
-  quantity: string | null
+  quantity: number | null
   total_price: string
   category_id: number | null
 }
@@ -237,7 +272,7 @@ export type ReceiptDraft = {
 
 export type ConfirmItem = {
   name: string
-  quantity: string | null
+  quantity: number | null
   total_price: string
   category_id: number
 }
@@ -257,7 +292,7 @@ export type ReceiptConfirmResponse = {
 export type ReceiptItemDetail = {
   id: number
   name: string
-  quantity: string | null
+  quantity: number | null
   total_price: string
   category_id: number | null
 }
@@ -303,6 +338,7 @@ export type VoiceExpenseDraft = {
   category_id: number | null
   category_name: string
   date: string
+  pending_id: number | null
 }
 
 export type VoiceIncomeDraft = {
@@ -311,12 +347,14 @@ export type VoiceIncomeDraft = {
   source: string
   date: string
   is_recurring: boolean
+  pending_id: number | null
 }
 
 export type VoiceCategoryDraft = {
   type: 'category'
   name: string
   budget_amount: string
+  pending_id: number | null
 }
 
 export type VoiceDraft = VoiceExpenseDraft | VoiceIncomeDraft | VoiceCategoryDraft
@@ -325,6 +363,31 @@ export type VoiceChatResponse = {
   reply_text: string
   audio_b64: string
   draft: VoiceDraft | null
+}
+
+export async function tts(text: string): Promise<string> {
+  const res = await fetch(`${API_BASE}/voice/tts`, {
+    method: 'POST',
+    headers: authHeaders(),
+    body: JSON.stringify({ text }),
+  })
+  if (!res.ok) throw new Error('TTS failed.')
+  const data = await res.json()
+  return data.audio_b64 as string
+}
+
+export async function transcribeAudio(blob: Blob): Promise<string> {
+  const token = getToken()
+  const form = new FormData()
+  form.append('audio', blob, 'audio.webm')
+  const res = await fetch(`${API_BASE}/voice/transcribe`, {
+    method: 'POST',
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+    body: form,
+  })
+  if (!res.ok) throw new Error('Transcription failed.')
+  const data = await res.json()
+  return data.text as string
 }
 
 export async function voiceChat(text: string): Promise<VoiceChatResponse> {
@@ -350,6 +413,10 @@ export async function confirmReceipt(payload: ConfirmReceiptPayload): Promise<Re
   return res.json()
 }
 
-export async function clearVoiceHistory(): Promise<void> {
-  await fetch(`${API_BASE}/voice/history`, { method: 'DELETE', headers: authHeaders() })
+export async function resolvePendingDraft(pendingId: number, status: 'confirmed' | 'abandoned'): Promise<void> {
+  await fetch(`${API_BASE}/voice/pending/${pendingId}`, {
+    method: 'PATCH',
+    headers: authHeaders(),
+    body: JSON.stringify({ status }),
+  })
 }

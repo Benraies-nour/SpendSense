@@ -16,6 +16,6 @@ class ReceiptItem(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     receipt_id: int = Field(foreign_key="receipt.id")
     name: str
-    quantity: Decimal | None = Field(default=None, max_digits=12, decimal_places=3)
+    quantity: int | None = Field(default=None)
     total_price: Decimal = Field(max_digits=12, decimal_places=3)
     category_id: int | None = Field(default=None, foreign_key="category.id")

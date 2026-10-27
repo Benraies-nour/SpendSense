@@ -14,6 +14,7 @@ import app.models.store
 import app.models.receipt
 import app.models.expense
 import app.models.voice_message
+import app.models.pending_transaction
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
