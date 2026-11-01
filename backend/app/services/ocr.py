@@ -81,11 +81,12 @@ def _extract_amount(field: dict | None) -> Decimal | None:
 
 def _extract_datetime(date_field: dict | None, time_field: dict | None) -> datetime | None:
     """Combine date and time fields into a UTC datetime, or return None."""
-    date_val = (date_field or {}).get("valueDate")  
+    date_val = (date_field or {}).get("valueDate")
 
     if not date_val:
         return None
 
+    time_val = (time_field or {}).get("valueTime")
     dt_str = f"{date_val}T{time_val}" if time_val else f"{date_val}T00:00:00"
     try:
         return datetime.fromisoformat(dt_str).replace(tzinfo=timezone.utc)
