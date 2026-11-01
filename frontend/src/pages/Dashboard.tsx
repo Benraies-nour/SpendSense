@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { ReceiptIcon, MoonIcon, SunIcon } from '@phosphor-icons/react'
-import { LayoutDashboard, FolderKanban, Settings as SettingsIcon, DollarSign, TrendingUp, Tag, LogOut } from 'lucide-react'
+import { LayoutDashboard, FolderKanban, Settings as SettingsIcon, DollarSign, TrendingUp, Tag, LogOut, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import type { AppTab } from '../hooks/useHashRoute'
 import { navigate, routeHref } from '../hooks/useHashRoute'
 import { clearToken } from '../lib/api'
@@ -17,8 +17,26 @@ type DashboardProps = {
   onToggleTheme: () => void
 }
 
+function useIsMobile() {
+  const [mobile, setMobile] = useState(() => window.innerWidth < 768)
+  useEffect(() => {
+    const fn = () => setMobile(window.innerWidth < 768)
+    window.addEventListener('resize', fn)
+    return () => window.removeEventListener('resize', fn)
+  }, [])
+  return mobile
+}
+
 export function Dashboard({ tab, theme, onToggleTheme }: DashboardProps) {
+  const isMobile = useIsMobile()
   const [manageTab, setManageTab] = useState<ManageTab>('expenses')
+  const [sidebarOpen, setSidebarOpen] = useState(!isMobile)
+
+  // Close sidebar automatically when switching to mobile
+  useEffect(() => {
+    if (isMobile) setSidebarOpen(false)
+    else setSidebarOpen(true)
+  }, [isMobile])
 
   // Nova routes drafts (income/category) to the right sub-tab via this event
   useEffect(() => {
@@ -33,20 +51,39 @@ export function Dashboard({ tab, theme, onToggleTheme }: DashboardProps) {
   return (
     <div style={{ display: 'flex', minHeight: '100vh' }}>
 
+      {/* ── Mobile backdrop ── */}
+      {isMobile && sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 40,
+            background: 'rgba(0,0,0,0.5)',
+          }}
+        />
+      )}
+
       {/* ── Sidebar ── */}
       <aside style={{
-        width: '240px',
+        width: sidebarOpen ? '240px' : '0',
         flexShrink: 0,
         display: 'flex',
         flexDirection: 'column',
-        borderRight: '1px solid var(--border)',
+        borderRight: sidebarOpen ? '1px solid var(--border)' : 'none',
         background: 'var(--card)',
         padding: '0',
+        overflow: 'hidden',
+        transition: 'width 0.25s ease',
+        ...(isMobile ? {
+          position: 'fixed',
+          top: 0, left: 0, bottom: 0,
+          zIndex: 50,
+          width: sidebarOpen ? '240px' : '0',
+        } : {}),
       }}>
         {/* Brand + theme toggle */}
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '16px', borderBottom: '1px solid var(--border)',
+          padding: '16px', borderBottom: '1px solid var(--border)', whiteSpace: 'nowrap',
         }}>
           <a href={routeHref.home} style={{
             display: 'flex', alignItems: 'center', gap: '8px',
@@ -70,7 +107,7 @@ export function Dashboard({ tab, theme, onToggleTheme }: DashboardProps) {
         </div>
 
         {/* Nav */}
-        <nav style={{ flex: 1, padding: '12px 8px', display: 'flex', flexDirection: 'column', gap: '2px' }}>
+        <nav style={{ flex: 1, padding: '12px 8px', display: 'flex', flexDirection: 'column', gap: '2px', whiteSpace: 'nowrap' }}>
 
           {/* Overview */}
           <a
@@ -121,7 +158,7 @@ export function Dashboard({ tab, theme, onToggleTheme }: DashboardProps) {
         </nav>
 
         {/* Log out */}
-        <div style={{ padding: '12px 8px', borderTop: '1px solid var(--border)' }}>
+        <div style={{ padding: '12px 8px', borderTop: '1px solid var(--border)', whiteSpace: 'nowrap' }}>
           <button
             onClick={() => { clearToken(); navigate('home') }}
             className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium w-full border-none cursor-pointer transition-colors text-muted-foreground hover:text-foreground hover:bg-accent bg-transparent"
@@ -135,7 +172,22 @@ export function Dashboard({ tab, theme, onToggleTheme }: DashboardProps) {
 
       {/* ── Main content ── */}
       <main style={{ flex: 1, minWidth: 0, overflowY: 'auto' }}>
-        <div style={{ padding: '28px 64px' }}>
+        {/* Toggle button */}
+        <div style={{ padding: '12px 16px 0', display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <button
+            onClick={() => setSidebarOpen(o => !o)}
+            style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              width: '32px', height: '32px', borderRadius: '8px',
+              background: 'none', border: '1px solid var(--border)', cursor: 'pointer',
+              color: 'var(--muted-foreground)', flexShrink: 0,
+            }}
+            aria-label="Toggle sidebar"
+          >
+            {sidebarOpen ? <PanelLeftClose size={16} /> : <PanelLeftOpen size={16} />}
+          </button>
+        </div>
+        <div style={{ padding: isMobile ? '16px' : '16px 64px 28px' }}>
           {tab === 'overview'  && <Overview />}
           {tab === 'manage'    && <Manage tab={manageTab} onTabChange={setManageTab} />}
           {tab === 'settings'  && <Settings />}
